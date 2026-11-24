@@ -1356,6 +1356,7 @@
     <button class="context-action-btn" id="ctxPinBtn">📌 تثبيت المحادثة</button>
     <button class="context-action-btn" id="ctxLockBtn">🔒 قفل بكلمة سر</button>
     <button class="context-action-btn" id="ctxEditBtn">✏️ تعديل الشخصية</button>
+    <button class="context-action-btn" id="ctxCloneBtn">📋 استنساخ وحفظ دائم</button>
     <button class="context-action-btn" id="ctxPersonaBtn">🎭 هويتك في القصة</button>
     <button class="context-action-btn danger-action" id="ctxDeleteBtn">🗑️ حذف السجل نهائياً</button>
   </div>
@@ -1448,7 +1449,7 @@
     </div>
   </div>
 
-  <!-- ==================== نافذة إنشاء / تعديل الشخصية ==================== -->
+  <!-- ==================== نافذة إنشاء / تعديل / استنساخ الشخصية ==================== -->
   <div class="modal-backdrop" id="botEditorModal">
     <div class="modal">
       <h2 id="botEditorTitle">✨ إنشاء شخصية جديدة</h2>
@@ -1698,6 +1699,7 @@
     const ctxPinBtn = document.getElementById("ctxPinBtn");
     const ctxLockBtn = document.getElementById("ctxLockBtn");
     const ctxEditBtn = document.getElementById("ctxEditBtn");
+    const ctxCloneBtn = document.getElementById("ctxCloneBtn");
     const ctxPersonaBtn = document.getElementById("ctxPersonaBtn");
     const ctxDeleteBtn = document.getElementById("ctxDeleteBtn");
 
@@ -1879,13 +1881,15 @@
       } catch {}
     }
 
-    // ==================== مزامنة قاعدة بيانات كل بوت مع السيرفر ====================
+    // ==================== مزامنة قاعدة بيانات البوتات الدائمة مع السيرفر ====================
     async function loadServerBots() {
       try {
-        const res = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots`);
+        const res = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots?t=${Date.now()}`);
         const data = await res.json();
-        if (res.ok && data.ok && Array.isArray(data.bots)) {
-          serverBots = data.bots;
+        const botsList = Array.isArray(data) ? data : (Array.isArray(data.bots) ? data.bots : null);
+
+        if (res.ok && botsList) {
+          serverBots = botsList;
           localStorage.setItem(STORAGE_KEY_SERVER_BOTS_CACHE, JSON.stringify(serverBots));
           renderBotsGrid();
           updateDrawerContent();
@@ -2165,6 +2169,22 @@
       openBotEditor(bot);
     });
 
+    ctxCloneBtn.addEventListener("click", () => {
+      if (!contextMenuBot) return;
+      const botToClone = contextMenuBot;
+      closeContextMenu();
+      closeDrawer();
+
+      openBotEditor(null);
+      botEditorTitle.textContent = `📋 استنساخ دائم: ${botToClone.name}`;
+      document.getElementById("editorBotName").value = `${botToClone.name} (نسخة)`;
+      document.getElementById("editorBotAvatar").value = botToClone.avatarUrl || "";
+      document.getElementById("editorBotBio").value = botToClone.bio || "";
+      document.getElementById("editorBotGreeting").value = botToClone.greeting || "";
+      editorSendWelcomeImg = Boolean(botToClone.sendWelcomeImage);
+      updateEditorWelcomeToggleUI();
+    });
+
     ctxPersonaBtn.addEventListener("click", () => {
       if (!contextMenuBot) return;
       const bot = contextMenuBot;
@@ -2391,7 +2411,7 @@
       }
     });
 
-    // ==================== محرر إنشاء وتعديل الشخصية ====================
+    // ==================== محرر إنشاء وتعديل واستنساخ الشخصية (حفظ دائم) ====================
     function updateEditorWelcomeToggleUI() {
       editorWelcomeImgToggle.textContent = editorSendWelcomeImg ? "مفعّل" : "مخفي";
       editorWelcomeImgToggle.classList.toggle("on", editorSendWelcomeImg);
@@ -2505,6 +2525,12 @@
           localStorage.setItem(getStorageKey(refreshedBot), JSON.stringify(syncedMsgs));
           syncBotDedicatedDB(refreshedBot, { bot: refreshedBot, messages: syncedMsgs });
 
+          fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-admin-key": "yollo_admin_2026" },
+            body: JSON.stringify(refreshedBot)
+          }).catch(() => {});
+
           if (currentBot && currentBot.id === refreshedBot.id) {
             messages = syncedMsgs;
             proceedOpenBotChat(refreshedBot);
@@ -2512,14 +2538,21 @@
         }
         renderBotsGrid();
       } else {
+        // إنشاء أو استنساخ بوت جديد وحفظه بشكل دائم في قاعدة بيانات السيرفر (GitHub)
+        const originalBtnText = saveBotEditorBtn.textContent;
+        saveBotEditorBtn.disabled = true;
+        saveBotEditorBtn.textContent = "جاري الحفظ الدائم...";
+
         const newBot = {
-          id: `custom_${Date.now()}`,
+          id: `bot_${Date.now()}`,
+          botId: Math.floor(100000 + Math.random() * 900000),
+          sessionId: Math.floor(10000000 + Math.random() * 90000000),
           name,
           avatarUrl,
           chatsCount: "جديد",
-          isCustom: true,
-          categories: ["all", "custom"],
-          tags: ["مخصص", "قصة"],
+          isCustom: false,
+          categories: ["all", "anime", "story"],
+          tags: ["مستنسخ", "قصة"],
           bio,
           greeting,
           sendWelcomeImage: editorSendWelcomeImg,
@@ -2530,18 +2563,30 @@
           ]
         };
 
-        const customList = getAllBots().filter(b => b.isCustom);
-        customList.push(newBot);
-        localStorage.setItem(STORAGE_KEY_CUSTOM_BOTS, JSON.stringify(customList));
+        try {
+          const response = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-key": "yollo_admin_2026"
+            },
+            body: JSON.stringify(newBot)
+          });
 
-        fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots/add`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "x-admin-key": "yollo_admin_2026" },
-          body: JSON.stringify({ bot: newBot })
-        }).catch(() => {});
+          const result = await response.json();
+          if (!response.ok || (!result.success && !result.ok)) {
+            throw new Error(result.error || "فشل الحفظ الدائم في قاعدة البيانات");
+          }
 
-        botEditorModal.classList.remove("open");
-        renderBotsGrid();
+          await loadServerBots();
+          botEditorModal.classList.remove("open");
+          alert(`تم حفظ "${newBot.name}" بشكل دائم في قاعدة البيانات وسيظهر لجميع المستخدمين!`);
+        } catch (err) {
+          alert(`خطأ أثناء الحفظ الدائم: ${err.message}`);
+        } finally {
+          saveBotEditorBtn.disabled = false;
+          saveBotEditorBtn.textContent = originalBtnText;
+        }
       }
     });
 
