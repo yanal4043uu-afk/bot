@@ -685,7 +685,7 @@
 </head>
 <body>
 
-  <!-- ==================== 0. بوابة المصادقة وإعداد البروفايل ==================== -->
+  <!-- ==================== 0. بوابة المصادقة والملف الشخصي ==================== -->
   <section id="authView" class="view active">
     <div class="auth-card" id="authCredentialsStep">
       <div class="auth-logo-wrap">
@@ -728,11 +728,29 @@
           <label>كلمة المرور</label>
           <input type="password" id="signupPasswordInput" dir="ltr" placeholder="اختر كلمة مرور قوية..." required />
         </div>
-        <button type="submit" class="primary-cta" id="signupSubmitBtn">متابعة لإعداد البروفايل ←</button>
+        <button type="submit" class="primary-cta" id="signupSubmitBtn">إرسال رمز التحقق ←</button>
       </form>
     </div>
 
-    <!-- المرحلة 2: إعداد اسم المستخدم الفريد وصورة البروفايل -->
+    <!-- المرحلة 2: تأكيد رمز التحقق المرسل إلى Gmail -->
+    <div class="auth-card" id="authOtpStep" style="display:none;">
+      <div class="auth-logo-wrap">
+        <h2 style="font-size:17px; color:#fff;">📩 تأكيد البريد الإلكتروني</h2>
+        <p id="otpTargetLabel" style="font-size:12px; color:var(--text-action);">أدخل الرمز المكون من 6 أرقام المرسل لبريدك</p>
+      </div>
+
+      <div class="auth-error" id="otpErrorBox"></div>
+
+      <div class="auth-field">
+        <label>رمز التحقق (6 أرقام)</label>
+        <input type="text" id="otpCodeInput" dir="ltr" maxlength="6" placeholder="123456" style="text-align:center; font-size:18px; letter-spacing:6px; font-weight:bold;" />
+      </div>
+
+      <button type="button" class="primary-cta" id="verifyOtpBtn">تأكيد الرمز والمتابعة ✅</button>
+      <button type="button" class="secondary-cta" id="backToSignupBtn" style="border:none; background:transparent;">تغيير البريد الإلكتروني</button>
+    </div>
+
+    <!-- المرحلة 3: إعداد اسم المستخدم الفريد وصورة البروفايل -->
     <div class="auth-card" id="authProfileStep" style="display:none;">
       <div class="auth-logo-wrap">
         <h2 style="font-size:17px; color:#fff;">🎭 إكمال إعداد البروفايل</h2>
@@ -1136,12 +1154,16 @@
     // عناصر المصادقة
     const authView = document.getElementById("authView");
     const authCredentialsStep = document.getElementById("authCredentialsStep");
+    const authOtpStep = document.getElementById("authOtpStep");
     const authProfileStep = document.getElementById("authProfileStep");
     const tabLoginBtn = document.getElementById("tabLoginBtn");
     const tabSignupBtn = document.getElementById("tabSignupBtn");
     const loginForm = document.getElementById("loginForm");
     const signupForm = document.getElementById("signupForm");
     const authErrorBox = document.getElementById("authErrorBox");
+    const otpErrorBox = document.getElementById("otpErrorBox");
+    const otpCodeInput = document.getElementById("otpCodeInput");
+    const verifyOtpBtn = document.getElementById("verifyOtpBtn");
     const profileErrorBox = document.getElementById("profileErrorBox");
     const profileAvatarPreview = document.getElementById("profileAvatarPreview");
     const profileAvatarFileInput = document.getElementById("profileAvatarFileInput");
@@ -1211,7 +1233,7 @@
     let isSending = false;
     let lastUserPromptText = "";
 
-    // ==================== منطق نظام المصادقة (المرحلة 1 و 2) ====================
+    // ==================== منطق نظام المصادقة (المرحلة 1 و 2 و 3) ====================
     tabLoginBtn.addEventListener("click", () => {
       tabLoginBtn.classList.add("active");
       tabSignupBtn.classList.remove("active");
@@ -1269,7 +1291,7 @@
       }
     });
 
-    // المرحلة 1: إنشاء حساب (@gmail.com فقط)
+    // المرحلة 1: إرسال رمز تحقق حقيقي (OTP) إلى Gmail
     signupForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       authErrorBox.style.display = "none";
@@ -1283,7 +1305,7 @@
 
       const btn = document.getElementById("signupSubmitBtn");
       btn.disabled = true;
-      btn.textContent = "⏳ جاري إنشاء الحساب...";
+      btn.textContent = "⏳ جاري إرسال رمز التحقق...";
 
       try {
         const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
@@ -1292,18 +1314,58 @@
           body: JSON.stringify({ name, email, password })
         });
         const data = await res.json();
-        if (!res.ok || !data.ok) throw new Error(data.error || "فشل إنشاء الحساب");
+        if (!res.ok || !data.ok) throw new Error(data.error || "فشل إرسال رمز التحقق");
 
-        pendingAuthState = { pendingToken: data.pendingToken, email, name };
-        profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
+        pendingAuthState = { email, name };
+        document.getElementById("otpTargetLabel").textContent = `تم إرسال رمز التحقق إلى: ${email}`;
+        otpCodeInput.value = "";
+        otpErrorBox.style.display = "none";
         authCredentialsStep.style.display = "none";
-        authProfileStep.style.display = "flex";
+        authOtpStep.style.display = "flex";
+        setTimeout(() => otpCodeInput.focus(), 50);
       } catch (err) {
         showAuthError(authErrorBox, err.message);
       } finally {
         btn.disabled = false;
-        btn.textContent = "متابعة لإعداد البروفايل ←";
+        btn.textContent = "إرسال رمز التحقق ←";
       }
+    });
+
+    // المرحلة 2: تأكيد رمز OTP المكون من 6 أرقام
+    verifyOtpBtn.addEventListener("click", async () => {
+      otpErrorBox.style.display = "none";
+      const code = otpCodeInput.value.trim();
+      if (!/^\d{6}$/.test(code)) {
+        return showAuthError(otpErrorBox, "أدخل الرمز المكون من 6 أرقام.");
+      }
+
+      verifyOtpBtn.disabled = true;
+      verifyOtpBtn.textContent = "⏳ جاري التأكيد...";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: pendingAuthState?.email, code })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || "رمز التحقق غير صحيح");
+
+        pendingAuthState.pendingToken = data.pendingToken;
+        profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(pendingAuthState.name)}`;
+        authOtpStep.style.display = "none";
+        authProfileStep.style.display = "flex";
+      } catch (err) {
+        showAuthError(otpErrorBox, err.message);
+      } finally {
+        verifyOtpBtn.disabled = false;
+        verifyOtpBtn.textContent = "تأكيد الرمز والمتابعة ✅";
+      }
+    });
+
+    document.getElementById("backToSignupBtn").addEventListener("click", () => {
+      authOtpStep.style.display = "none";
+      authCredentialsStep.style.display = "flex";
     });
 
     // رفع وضغط صورة البروفايل
@@ -1329,7 +1391,7 @@
       reader.readAsDataURL(file);
     });
 
-    // المرحلة 2: حفظ اسم المستخدم الفريد والصورة وتوليد ID / UID / XID
+    // المرحلة 3: حفظ اسم المستخدم الفريد والصورة وتوليد ID / UID / XID
     completeProfileBtn.addEventListener("click", async () => {
       profileErrorBox.style.display = "none";
       const username = profileUsernameInput.value.trim().toLowerCase().replace(/^@+/, "");
@@ -1390,6 +1452,7 @@
       chatView.classList.remove("active");
       homeView.classList.remove("active");
       authCredentialsStep.style.display = "flex";
+      authOtpStep.style.display = "none";
       authProfileStep.style.display = "none";
       authView.classList.add("active");
     });
@@ -1583,7 +1646,6 @@
       } catch {}
     }
 
-    // زر "حذف السجل نهائياً": يمرر الطلب لـ Yollo أولاً ويمسح سجل المستخدم الحالي فقط
     async function executeHardDeleteHistory(bot) {
       if (!bot || !currentUser) return null;
       const res = await fetch(`${API_BASE_URL}/api/hard-delete-history`, {
@@ -1762,7 +1824,6 @@
 
     ctxPersonaBtn.addEventListener("click", () => { if (contextMenuBot) { const b = contextMenuBot; closeContextMenu(); closeDrawer(); openPersonaModalForBot(b); } });
 
-    // تنفيذ "حذف السجل نهائياً" (حذف من Yollo + مسح من حساب المستخدم الحالي فقط + إخفاء من القائمة الجانبية)
     ctxDeleteBtn.addEventListener("click", async () => {
       if (!contextMenuBot) return;
       const bot = contextMenuBot;
