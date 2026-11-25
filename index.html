@@ -43,14 +43,8 @@
       overflow: hidden;
     }
 
-    ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 999px;
-    }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 999px; }
 
     .view {
       display: none;
@@ -63,45 +57,132 @@
       background-color: var(--bg-main);
     }
 
-    .view.active {
+    .view.active { display: flex; }
+
+    /* ==================== بوابة المصادقة والملف الشخصي ==================== */
+    #authView {
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: radial-gradient(circle at top, rgba(99, 102, 241, 0.16), transparent 60%), var(--bg-main);
+      overflow-y: auto;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 410px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: 22px;
+      padding: 24px 20px;
       display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .auth-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+
+    .auth-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent), #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-input);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .auth-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-action);
+      padding: 9px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-tab-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff;
+    }
+
+    .auth-field { display: flex; flex-direction: column; gap: 5px; }
+    .auth-field label { font-size: 12px; color: var(--text-action); font-weight: 600; }
+    .auth-field input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 11px 13px;
+      border-radius: 11px;
+      font-size: 13.5px;
+      outline: none;
+    }
+    .auth-field input:focus { border-color: var(--accent); }
+
+    .avatar-upload-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: var(--bg-input);
+      border: 1px dashed var(--border-strong);
+      border-radius: 14px;
+    }
+
+    .avatar-preview-circle {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      background: #1e293b;
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      font-size: 12.5px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      display: none;
     }
 
     /* ==================== حركات الإيموجيات ==================== */
-    .anim-emoji {
-      display: inline-block;
-      transform-origin: center;
-    }
-    .anim-sparkle {
-      animation: emojiSparkle 2.4s ease-in-out infinite;
-    }
-    .anim-float {
-      animation: emojiFloat 2.8s ease-in-out infinite;
-    }
-    .anim-wiggle {
-      animation: emojiWiggle 3.2s ease-in-out infinite;
-    }
-    .anim-spin-slow {
-      animation: emojiGear 7s linear infinite;
-    }
+    .anim-emoji { display: inline-block; transform-origin: center; }
+    .anim-sparkle { animation: emojiSparkle 2.4s ease-in-out infinite; }
+    .anim-float { animation: emojiFloat 2.8s ease-in-out infinite; }
+    .anim-wiggle { animation: emojiWiggle 3.2s ease-in-out infinite; }
+    .anim-spin-slow { animation: emojiGear 7s linear infinite; }
 
-    @keyframes emojiSparkle {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.22) rotate(12deg); }
-    }
-    @keyframes emojiFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-2.5px); }
-    }
-    @keyframes emojiWiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-10deg); }
-      75% { transform: rotate(10deg); }
-    }
-    @keyframes emojiGear {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    @keyframes emojiSparkle { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.22) rotate(12deg); } }
+    @keyframes emojiFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-2.5px); } }
+    @keyframes emojiWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+    @keyframes emojiGear { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
     /* ==================== القائمة الجانبية ==================== */
     .drawer-backdrop {
@@ -114,18 +195,14 @@
       transition: opacity 0.25s ease;
       z-index: 40;
     }
-
-    .drawer-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
 
     .sidebar-drawer {
       position: fixed;
       top: 0;
       right: 0;
       bottom: 0;
-      width: min(312px, 86vw);
+      width: min(318px, 87vw);
       background: linear-gradient(180deg, #0e1424 0%, #090d16 100%);
       border-left: 1px solid var(--border-strong);
       transform: translateX(105%);
@@ -136,13 +213,10 @@
       overflow: hidden;
       box-shadow: -14px 0 38px rgba(0, 0, 0, 0.65);
     }
-
-    .sidebar-drawer.open {
-      transform: translateX(0);
-    }
+    .sidebar-drawer.open { transform: translateX(0); }
 
     .drawer-top {
-      padding: 18px 16px;
+      padding: 16px;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
@@ -150,35 +224,37 @@
       background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, transparent), rgba(236, 72, 153, 0.06));
     }
 
-    .drawer-brand {
+    .user-profile-pill {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
+      min-width: 0;
     }
 
-    .drawer-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, var(--accent), #ec4899);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 17px;
+    .user-profile-pill img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .user-profile-info h3 {
+      font-size: 14px;
+      font-weight: 700;
       color: #fff;
-      box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .drawer-brand-text h2 {
-      font-size: 15.5px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .drawer-brand-text span {
-      font-size: 11.5px;
+    .user-profile-info span {
+      font-size: 11px;
       color: #a5b4fc;
+      display: block;
+      direction: ltr;
+      text-align: right;
     }
 
     .close-drawer-btn {
@@ -198,7 +274,7 @@
       padding: 16px 13px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
     .drawer-section-title {
@@ -212,11 +288,7 @@
       justify-content: space-between;
     }
 
-    .drawer-nav-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
+    .drawer-nav-list { display: flex; flex-direction: column; gap: 7px; }
 
     .drawer-item {
       width: 100%;
@@ -239,11 +311,7 @@
       border-color: color-mix(in srgb, var(--accent) 48%, transparent);
     }
 
-    .drawer-item-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .drawer-item-left { display: flex; align-items: center; gap: 10px; }
 
     .drawer-badge {
       background: color-mix(in srgb, var(--accent) 26%, transparent);
@@ -254,7 +322,6 @@
       border-radius: 999px;
     }
 
-    /* سجل المحادثات النشطة وقائمة الثلاث نقاط */
     .recent-chat-item {
       position: relative;
       display: flex;
@@ -274,14 +341,7 @@
       background: color-mix(in srgb, var(--accent) 10%, rgba(255, 255, 255, 0.02));
     }
 
-    .recent-chat-main {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      flex: 1;
-    }
-
+    .recent-chat-main { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .recent-chat-main img {
       width: 40px;
       height: 40px;
@@ -292,33 +352,10 @@
       border: 1.5px solid color-mix(in srgb, var(--accent) 45%, rgba(255, 255, 255, 0.15));
     }
 
-    .recent-chat-meta {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .recent-chat-title-row {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .recent-chat-meta h4 {
-      font-size: 13px;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .recent-chat-meta p {
-      font-size: 11px;
-      color: var(--text-action);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-top: 2px;
-    }
+    .recent-chat-meta { min-width: 0; flex: 1; }
+    .recent-chat-title-row { display: flex; align-items: center; gap: 5px; }
+    .recent-chat-meta h4 { font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .recent-chat-meta p { font-size: 11px; color: var(--text-action); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
 
     .dots-menu-btn {
       background: rgba(255, 255, 255, 0.06);
@@ -349,10 +386,7 @@
       flex-direction: column;
       gap: 3px;
     }
-
-    .chat-context-menu.open {
-      display: flex;
-    }
+    .chat-context-menu.open { display: flex; }
 
     .context-action-btn {
       width: 100%;
@@ -369,20 +403,11 @@
       cursor: pointer;
       text-align: right;
     }
+    .context-action-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    .context-action-btn.danger-action { color: #fca5a5; }
+    .context-action-btn.danger-action:hover { background: rgba(239, 68, 68, 0.16); }
 
-    .context-action-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .context-action-btn.danger-action {
-      color: #fca5a5;
-    }
-
-    .context-action-btn.danger-action:hover {
-      background: rgba(239, 68, 68, 0.16);
-    }
-
-    /* ==================== 1. الواجهة الرئيسية ==================== */
+    /* ==================== الواجهة الرئيسية ==================== */
     .home-header {
       background-color: var(--bg-header);
       backdrop-filter: blur(14px);
@@ -395,12 +420,7 @@
       z-index: 10;
     }
 
-    .header-right-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
+    .header-right-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
     .menu-btn {
       background: var(--bg-input);
@@ -417,28 +437,10 @@
       flex-shrink: 0;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-weight: 800;
-      font-size: 17px;
-      color: #fff;
-    }
+    .brand { display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 17px; color: #fff; }
+    .brand-badge { background: linear-gradient(135deg, var(--accent), #ec4899); padding: 2px 7px; border-radius: 7px; font-size: 10px; font-weight: 700; }
 
-    .brand-badge {
-      background: linear-gradient(135deg, var(--accent), #ec4899);
-      padding: 2px 7px;
-      border-radius: 7px;
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .search-box {
-      flex: 1;
-      max-width: 220px;
-    }
-
+    .search-box { flex: 1; max-width: 220px; }
     .search-box input {
       width: 100%;
       background: var(--bg-input);
@@ -450,21 +452,9 @@
       outline: none;
     }
 
-    .filter-section {
-      padding: 12px 14px 6px;
-      background-color: var(--bg-main);
-    }
-
-    .pill-tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-
-    .pill-tabs::-webkit-scrollbar {
-      display: none;
-    }
+    .filter-section { padding: 12px 14px 6px; background-color: var(--bg-main); }
+    .pill-tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .pill-tabs::-webkit-scrollbar { display: none; }
 
     .filter-pill {
       background: var(--bg-card);
@@ -477,7 +467,6 @@
       white-space: nowrap;
       cursor: pointer;
     }
-
     .filter-pill.active {
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
       color: #fff;
@@ -485,25 +474,10 @@
       box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
-    .bots-grid-wrapper {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px 14px 28px;
-    }
-
-    .bots-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    @media (min-width: 600px) {
-      .bots-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (min-width: 860px) {
-      .bots-grid { grid-template-columns: repeat(4, 1fr); }
-    }
+    .bots-grid-wrapper { flex: 1; overflow-y: auto; padding: 10px 14px 28px; }
+    .bots-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (min-width: 600px) { .bots-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 860px) { .bots-grid { grid-template-columns: repeat(4, 1fr); } }
 
     .bot-card {
       background-color: var(--bg-card);
@@ -516,11 +490,7 @@
       position: relative;
       transition: transform 0.18s ease, border-color 0.18s ease;
     }
-
-    .bot-card:active {
-      transform: scale(0.98);
-      border-color: var(--accent);
-    }
+    .bot-card:active { transform: scale(0.98); border-color: var(--accent); }
 
     .card-top-badges {
       position: absolute;
@@ -534,47 +504,12 @@
       pointer-events: none;
     }
 
-    .active-chat-dot {
-      background: rgba(16, 185, 129, 0.9);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
+    .active-chat-dot { background: rgba(16, 185, 129, 0.9); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+    .lock-badge { background: rgba(15, 20, 31, 0.85); border: 1px solid rgba(255, 255, 255, 0.18); color: #fbbf24; font-size: 11px; padding: 2px 7px; border-radius: 999px; }
 
-    .lock-badge {
-      background: rgba(15, 20, 31, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      color: #fbbf24;
-      font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 999px;
-    }
-
-    .card-media {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 3 / 3.6;
-      background-color: #1c2436;
-      overflow: hidden;
-    }
-
-    .card-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
-
-    .card-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(17, 23, 36, 0.98) 0%, transparent 45%);
-      pointer-events: none;
-    }
+    .card-media { position: relative; width: 100%; aspect-ratio: 3 / 3.6; background-color: #1c2436; overflow: hidden; }
+    .card-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .card-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(17, 23, 36, 0.98) 0%, transparent 45%); pointer-events: none; }
 
     .chat-count-badge {
       position: absolute;
@@ -592,61 +527,15 @@
       direction: ltr;
     }
 
-    .card-body {
-      padding: 10px 11px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-      direction: ltr;
-      text-align: left;
-    }
+    .card-body { padding: 10px 11px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; direction: ltr; text-align: left; }
+    .card-title { font-size: 14.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-desc { font-size: 12px; line-height: 1.45; color: var(--text-action); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; padding-top: 4px; direction: rtl; }
+    .tag-chip { background: rgba(255, 255, 255, 0.06); color: #cbd5e1; font-size: 10.5px; padding: 3px 8px; border-radius: 999px; }
 
-    .card-title {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 40px 16px; color: var(--text-action); font-size: 13.5px; }
 
-    .card-desc {
-      font-size: 12px;
-      line-height: 1.45;
-      color: var(--text-action);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-top: auto;
-      padding-top: 4px;
-      direction: rtl;
-    }
-
-    .tag-chip {
-      background: rgba(255, 255, 255, 0.06);
-      color: #cbd5e1;
-      font-size: 10.5px;
-      padding: 3px 8px;
-      border-radius: 999px;
-    }
-
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 40px 16px;
-      color: var(--text-action);
-      font-size: 13.5px;
-    }
-
-    /* ==================== 2. واجهة المحادثة ==================== */
+    /* ==================== واجهة المحادثة ==================== */
     .ambient-bg {
       position: absolute;
       inset: 0;
@@ -671,13 +560,7 @@
       z-index: 10;
     }
 
-    .chat-header-right {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      min-width: 0;
-    }
-
+    .chat-header-right { display: flex; align-items: center; gap: 7px; min-width: 0; }
     .back-btn {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
@@ -693,629 +576,197 @@
       flex-shrink: 0;
     }
 
-    .bot-profile {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 0;
-    }
+    .bot-profile { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .header-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; object-position: top center; flex-shrink: 0; border: 2px solid rgba(255, 255, 255, 0.2); }
+    .bot-info { min-width: 0; }
+    .bot-info h1 { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .status-line { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-action); margin-top: 2px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background-color: var(--success); }
+    .status-dot.typing { background-color: #f59e0b; animation: pulse 1s infinite; }
 
-    .header-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      flex-shrink: 0;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
+    .header-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .icon-btn { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 11px; border-radius: 9px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+    .icon-btn.danger { color: #fca5a5; border-color: rgba(239, 68, 68, 0.35); }
 
-    .bot-info {
-      min-width: 0;
-    }
+    #chatContainer { flex: 1; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; position: relative; z-index: 1; }
 
-    .bot-info h1 {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .character-intro { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 12px 12px 16px; margin-bottom: 4px; border-bottom: 1px solid var(--border-color); }
+    .intro-avatar { width: 82px; height: 82px; border-radius: 50%; object-fit: cover; object-position: top center; border: 2px solid rgba(255, 255, 255, 0.22); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); margin-bottom: 10px; }
+    .intro-name { font-size: 16.5px; font-weight: 700; color: #ffffff; margin-bottom: 6px; }
+    .intro-bio { font-size: 12.5px; line-height: 1.55; color: var(--text-action); max-width: 92%; direction: ltr; }
 
-    .status-line {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--text-action);
-      margin-top: 2px;
-    }
+    .msg-row { display: flex; align-items: flex-start; gap: 8px; max-width: var(--bubble-max-width); animation: fadeIn 0.2s ease-out; }
+    .msg-row.user { align-self: flex-start; flex-direction: row; }
+    .msg-row.bot, .msg-row.error { align-self: flex-end; flex-direction: row-reverse; }
 
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: var(--success);
-    }
+    .msg-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; object-position: top center; flex-shrink: 0; margin-top: 2px; border: 1px solid rgba(255, 255, 255, 0.18); }
+    .msg-content-wrap { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 
-    .status-dot.typing {
-      background-color: #f59e0b;
-      animation: pulse 1s infinite;
-    }
+    .bubble { padding: 11px 14px; border-radius: 16px; line-height: 1.72; font-size: var(--chat-font-size); white-space: pre-wrap; word-wrap: break-word; backdrop-filter: blur(8px); }
+    .msg-row.user .bubble { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 28%, transparent); }
+    .msg-row.bot .bubble { background-color: var(--bg-bot); border: 1px solid var(--border-color); color: var(--text-primary); border-bottom-left-radius: 4px; }
+    .msg-row.bot .bubble.ltr-msg { direction: ltr; text-align: left; }
+    .msg-row.bot .bubble.image-bubble { padding: 6px; background-color: var(--bg-bot); border: 1px solid var(--border-color); }
+    .chat-sent-img { display: block; width: min(210px, 58vw); border-radius: 12px; object-fit: cover; }
+    .msg-row.error .bubble { background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; }
 
-    .header-controls {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
+    .msg-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding: 0 2px; }
+    .msg-row.user .msg-tools { justify-content: flex-start; }
+    .msg-row.bot .msg-tools { justify-content: flex-end; }
 
-    .icon-btn {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-primary);
-      padding: 6px 11px;
-      border-radius: 9px;
-      font-size: 12px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .mini-tool-btn { background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); color: #cbd5e1; font-size: 11px; padding: 3px 8px; border-radius: 7px; cursor: pointer; }
+    .mini-tool-btn.accent-tool { background: color-mix(in srgb, var(--accent) 18%, transparent); border-color: color-mix(in srgb, var(--accent) 42%, transparent); color: #e0e7ff; }
 
-    .icon-btn.danger {
-      color: #fca5a5;
-      border-color: rgba(239, 68, 68, 0.35);
-    }
+    .rp-action { color: var(--text-action); font-style: italic; }
+    .rp-quote { color: var(--text-quote); font-weight: 600; }
 
-    #chatContainer {
-      flex: 1;
-      overflow-y: auto;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      scroll-behavior: smooth;
-      position: relative;
-      z-index: 1;
-    }
-
-    .character-intro {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 12px 12px 16px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .intro-avatar {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      border: 2px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      margin-bottom: 10px;
-    }
-
-    .intro-name {
-      font-size: 16.5px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 6px;
-    }
-
-    .intro-bio {
-      font-size: 12.5px;
-      line-height: 1.55;
-      color: var(--text-action);
-      max-width: 92%;
-      direction: ltr;
-    }
-
-    .msg-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      max-width: var(--bubble-max-width);
-      animation: fadeIn 0.2s ease-out;
-    }
-
-    .msg-row.user {
-      align-self: flex-start;
-      flex-direction: row;
-    }
-
-    .msg-row.bot,
-    .msg-row.error {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-
-    .msg-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: top center;
-      flex-shrink: 0;
-      margin-top: 2px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .msg-content-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      min-width: 0;
-    }
-
-    .bubble {
-      padding: 11px 14px;
-      border-radius: 16px;
-      line-height: 1.72;
-      font-size: var(--chat-font-size);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      backdrop-filter: blur(8px);
-    }
-
-    .msg-row.user .bubble {
-      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      color: #fff;
-      border-bottom-right-radius: 4px;
-      box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 28%, transparent);
-    }
-
-    .msg-row.bot .bubble {
-      background-color: var(--bg-bot);
-      border: 1px solid var(--border-color);
-      color: var(--text-primary);
-      border-bottom-left-radius: 4px;
-    }
-
-    .msg-row.bot .bubble.ltr-msg {
-      direction: ltr;
-      text-align: left;
-    }
-
-    .msg-row.bot .bubble.image-bubble {
-      padding: 6px;
-      background-color: var(--bg-bot);
-      border: 1px solid var(--border-color);
-    }
-
-    .chat-sent-img {
-      display: block;
-      width: min(210px, 58vw);
-      border-radius: 12px;
-      object-fit: cover;
-    }
-
-    .msg-row.error .bubble {
-      background-color: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #fca5a5;
-    }
-
-    .msg-tools {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 5px;
-      padding: 0 2px;
-    }
-
-    .msg-row.user .msg-tools {
-      justify-content: flex-start;
-    }
-
-    .msg-row.bot .msg-tools {
-      justify-content: flex-end;
-    }
-
-    .mini-tool-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-color);
-      color: #cbd5e1;
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 7px;
-      cursor: pointer;
-    }
-
-    .mini-tool-btn.accent-tool {
-      background: color-mix(in srgb, var(--accent) 18%, transparent);
-      border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-      color: #e0e7ff;
-    }
-
-    .rp-action {
-      color: var(--text-action);
-      font-style: italic;
-    }
-
-    .rp-quote {
-      color: var(--text-quote);
-      font-weight: 600;
-    }
-
-    .typing-dots {
-      display: inline-flex;
-      gap: 4px;
-      padding: 4px 2px;
-    }
-
-    .typing-dots span {
-      width: 7px;
-      height: 7px;
-      background-color: var(--text-action);
-      border-radius: 50%;
-      animation: bounce 1.3s infinite ease-in-out;
-    }
-
+    .typing-dots { display: inline-flex; gap: 4px; padding: 4px 2px; }
+    .typing-dots span { width: 7px; height: 7px; background-color: var(--text-action); border-radius: 50%; animation: bounce 1.3s infinite ease-in-out; }
     .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
     .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
 
-    .quick-bar {
-      display: flex;
-      gap: 7px;
-      padding: 7px 12px;
-      overflow-x: auto;
-      background-color: rgba(7, 10, 16, 0.9);
-      border-top: 1px solid var(--border-color);
-      scrollbar-width: none;
-      position: relative;
-      z-index: 2;
-    }
+    .quick-bar { display: flex; gap: 7px; padding: 7px 12px; overflow-x: auto; background-color: rgba(7, 10, 16, 0.9); border-top: 1px solid var(--border-color); scrollbar-width: none; position: relative; z-index: 2; }
+    .quick-bar.hidden { display: none; }
+    .quick-bar::-webkit-scrollbar { display: none; }
+    .chip { background-color: var(--bg-input); border: 1px solid var(--border-color); color: #cbd5e1; padding: 6px 12px; border-radius: 999px; font-size: 12px; white-space: nowrap; cursor: pointer; }
 
-    .quick-bar.hidden {
-      display: none;
-    }
+    .format-toolbar { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background-color: #0c111d; border-top: 1px solid var(--border-color); position: relative; z-index: 2; }
+    .format-toolbar.hidden { display: none; }
+    .fmt-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: #cbd5e1; font-size: 11.5px; padding: 4px 10px; border-radius: 7px; cursor: pointer; }
 
-    .quick-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .chip {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: #cbd5e1;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    .format-toolbar {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background-color: #0c111d;
-      border-top: 1px solid var(--border-color);
-      position: relative;
-      z-index: 2;
-    }
-
-    .format-toolbar.hidden {
-      display: none;
-    }
-
-    .fmt-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      color: #cbd5e1;
-      font-size: 11.5px;
-      padding: 4px 10px;
-      border-radius: 7px;
-      cursor: pointer;
-    }
-
-    .input-area {
-      background-color: var(--bg-header);
-      border-top: 1px solid var(--border-color);
-      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      position: relative;
-      z-index: 2;
-    }
-
-    textarea {
-      flex: 1;
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      color: #fff;
-      padding: 10px 12px;
-      font-size: 14px;
-      resize: none;
-      max-height: 105px;
-      min-height: 42px;
-      outline: none;
-      line-height: 1.4;
-    }
-
-    #sendBtn {
-      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 0 16px;
-      height: 42px;
-      font-weight: 600;
-      font-size: 13.5px;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    #sendBtn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .input-area { background-color: var(--bg-header); border-top: 1px solid var(--border-color); padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); display: flex; gap: 8px; align-items: flex-end; position: relative; z-index: 2; }
+    textarea { flex: 1; background-color: var(--bg-input); border: 1px solid var(--border-color); border-radius: 12px; color: #fff; padding: 10px 12px; font-size: 14px; resize: none; max-height: 105px; min-height: 42px; outline: none; line-height: 1.4; }
+    #sendBtn { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #fff; border: none; border-radius: 12px; padding: 0 16px; height: 42px; font-weight: 600; font-size: 13.5px; cursor: pointer; flex-shrink: 0; }
+    #sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* ==================== النوافذ المنبثقة & Bottom Sheet ==================== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(5px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 50;
-    }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+    .modal-backdrop.open { display: flex; }
+    .modal-backdrop.bottom-sheet { align-items: flex-end; padding: 0; }
 
-    .modal-backdrop.open {
-      display: flex;
-    }
+    .modal { background: #111724; border: 1px solid var(--border-strong); border-radius: 18px; padding: 18px; width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 11px; max-height: 88dvh; overflow-y: auto; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6); }
+    .bottom-sheet .modal { max-width: 560px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding: 20px 18px calc(20px + env(safe-area-inset-bottom)); animation: slideUp 0.24s ease-out; }
 
-    .modal-backdrop.bottom-sheet {
-      align-items: flex-end;
-      padding: 0;
-    }
+    .modal h2 { font-size: 16px; color: #fff; }
+    .modal label { font-size: 12px; color: var(--text-action); display: block; margin-bottom: 4px; }
+    .modal input, .modal textarea, .modal select { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 9px 11px; border-radius: 9px; font-size: 13px; min-height: 38px; outline: none; }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
 
-    .modal {
-      background: #111724;
-      border: 1px solid var(--border-strong);
-      border-radius: 18px;
-      padding: 18px;
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-      max-height: 88dvh;
-      overflow-y: auto;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-    }
+    .preview-top { display: flex; align-items: center; gap: 14px; }
+    .preview-top img { width: 74px; height: 74px; border-radius: 16px; object-fit: cover; object-position: top center; border: 1px solid var(--border-strong); flex-shrink: 0; }
+    .preview-meta h3 { font-size: 17px; color: #fff; margin-bottom: 4px; }
+    .preview-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .preview-bio { font-size: 13px; line-height: 1.6; color: #cbd5e1; background: rgba(255, 255, 255, 0.03); padding: 10px 12px; border-radius: 11px; direction: ltr; text-align: left; }
 
-    .bottom-sheet .modal {
-      max-width: 560px;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      padding: 20px 18px calc(20px + env(safe-area-inset-bottom));
-      animation: slideUp 0.24s ease-out;
-    }
+    .primary-cta { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: #fff; border: none; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .primary-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+    .secondary-cta { width: 100%; background: var(--bg-input); color: #cbd5e1; border: 1px solid var(--border-color); padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-    .modal h2 {
-      font-size: 16px;
-      color: #fff;
-    }
+    .settings-group { background: rgba(255, 255, 255, 0.025); border: 1px solid var(--border-color); border-radius: 13px; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; }
+    .settings-group-title { font-size: 11.5px; font-weight: 700; color: #a5b4fc; margin-bottom: 2px; }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: #e5e7eb; }
 
-    .modal label {
-      font-size: 12px;
-      color: var(--text-action);
-      display: block;
-      margin-bottom: 4px;
-    }
+    .theme-swatches { display: flex; gap: 7px; }
+    .swatch-btn { width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+    .swatch-btn.active { border-color: #fff; transform: scale(1.15); }
 
-    .modal input,
-    .modal textarea,
-    .modal select {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 9px 11px;
-      border-radius: 9px;
-      font-size: 13px;
-      min-height: 38px;
-      outline: none;
-    }
+    .size-btn { background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-action); padding: 5px 9px; border-radius: 7px; font-size: 11.5px; cursor: pointer; }
+    .size-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    .modal-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
+    .toggle-pill { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 5px 12px; border-radius: 999px; font-size: 11.5px; cursor: pointer; }
+    .toggle-pill.on { background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.45); color: #6ee7b7; }
 
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .preview-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .preview-top img {
-      width: 74px;
-      height: 74px;
-      border-radius: 16px;
-      object-fit: cover;
-      object-position: top center;
-      border: 1px solid var(--border-strong);
-      flex-shrink: 0;
-    }
-
-    .preview-meta h3 {
-      font-size: 17px;
-      color: #fff;
-      margin-bottom: 4px;
-    }
-
-    .preview-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .preview-bio {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #cbd5e1;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 10px 12px;
-      border-radius: 11px;
-      direction: ltr;
-      text-align: left;
-    }
-
-    .primary-cta {
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .secondary-cta {
-      width: 100%;
-      background: var(--bg-input);
-      color: #cbd5e1;
-      border: 1px solid var(--border-color);
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .settings-group {
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid var(--border-color);
-      border-radius: 13px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .settings-group-title {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #a5b4fc;
-      margin-bottom: 2px;
-    }
-
-    .setting-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 13px;
-      color: #e5e7eb;
-    }
-
-    .theme-swatches {
-      display: flex;
-      gap: 7px;
-    }
-
-    .swatch-btn {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-    }
-
-    .swatch-btn.active {
-      border-color: #fff;
-      transform: scale(1.15);
-    }
-
-    .size-btn {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-action);
-      padding: 5px 9px;
-      border-radius: 7px;
-      font-size: 11.5px;
-      cursor: pointer;
-    }
-
-    .size-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-
-    .toggle-pill {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: #fff;
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: 11.5px;
-      cursor: pointer;
-    }
-
-    .toggle-pill.on {
-      background: rgba(16, 185, 129, 0.2);
-      border-color: rgba(16, 185, 129, 0.45);
-      color: #6ee7b7;
-    }
-
-    @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
-      40% { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
+    @keyframes bounce { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   </style>
 </head>
 <body>
+
+  <!-- ==================== 0. بوابة المصادقة وإعداد البروفايل ==================== -->
+  <section id="authView" class="view active">
+    <div class="auth-card" id="authCredentialsStep">
+      <div class="auth-logo-wrap">
+        <div class="auth-logo">Y</div>
+        <h2 style="font-size:18px; color:#fff;">Yollo RP — بوابة الدخول الآمنة</h2>
+        <p style="font-size:12px; color:var(--text-action);">حسابك ومحادثاتك وذكرياتك معزولة بالكامل</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tabLoginBtn">تسجيل الدخول</button>
+        <button type="button" class="auth-tab-btn" id="tabSignupBtn">إنشاء حساب جديد</button>
+      </div>
+
+      <div class="auth-error" id="authErrorBox"></div>
+
+      <!-- نموذج تسجيل الدخول -->
+      <form id="loginForm" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="auth-field">
+          <label>البريد الإلكتروني أو اسم المستخدم</label>
+          <input type="text" id="loginIdentifierInput" dir="ltr" placeholder="name@gmail.com أو username" required />
+        </div>
+        <div class="auth-field">
+          <label>كلمة المرور</label>
+          <input type="password" id="loginPasswordInput" dir="ltr" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="primary-cta" id="loginSubmitBtn">دخول إلى المنصة</button>
+      </form>
+
+      <!-- نموذج إنشاء حساب جديد (المرحلة 1) -->
+      <form id="signupForm" style="display:none; flex-direction:column; gap:12px;">
+        <div class="auth-field">
+          <label>الاسم الظاهر</label>
+          <input type="text" id="signupNameInput" placeholder="اكتب اسمك..." required />
+        </div>
+        <div class="auth-field">
+          <label>البريد الإلكتروني (@gmail.com حصراً)</label>
+          <input type="email" id="signupEmailInput" dir="ltr" placeholder="example@gmail.com" required />
+        </div>
+        <div class="auth-field">
+          <label>كلمة المرور</label>
+          <input type="password" id="signupPasswordInput" dir="ltr" placeholder="اختر كلمة مرور قوية..." required />
+        </div>
+        <button type="submit" class="primary-cta" id="signupSubmitBtn">متابعة لإعداد البروفايل ←</button>
+      </form>
+    </div>
+
+    <!-- المرحلة 2: إعداد اسم المستخدم الفريد وصورة البروفايل -->
+    <div class="auth-card" id="authProfileStep" style="display:none;">
+      <div class="auth-logo-wrap">
+        <h2 style="font-size:17px; color:#fff;">🎭 إكمال إعداد البروفايل</h2>
+        <p style="font-size:12px; color:var(--text-action);">اختر اسم مستخدم فريد وصورة بروفايل لتوليد طبقات الحماية الثلاث</p>
+      </div>
+
+      <div class="auth-error" id="profileErrorBox"></div>
+
+      <div class="avatar-upload-box">
+        <img id="profileAvatarPreview" class="avatar-preview-circle" src="https://api.dicebear.com/7.x/initials/svg?seed=User" alt="Avatar" />
+        <label class="icon-btn" style="cursor:pointer;">
+          📷 رفع صورة البروفايل
+          <input type="file" id="profileAvatarFileInput" accept="image/*" hidden />
+        </label>
+      </div>
+
+      <div class="auth-field">
+        <label>اسم المستخدم الفريد (Username بالإنجليزية)</label>
+        <input type="text" id="profileUsernameInput" dir="ltr" placeholder="yanal_99" />
+      </div>
+
+      <button type="button" class="primary-cta" id="completeProfileBtn">حفظ وتفعيل الحساب ✅</button>
+    </div>
+  </section>
 
   <!-- ==================== القائمة الجانبية ==================== -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="sidebar-drawer" id="sidebarDrawer">
     <div class="drawer-top">
-      <div class="drawer-brand">
-        <div class="drawer-logo">Y</div>
-        <div class="drawer-brand-text">
-          <h2>Yollo RP</h2>
-          <span id="drawerStatsText">1 شخصية متاحة</span>
+      <div class="user-profile-pill">
+        <img id="drawerUserAvatar" src="https://d.top4top.io/p_39776f6w21.jpg" alt="User" />
+        <div class="user-profile-info">
+          <h3 id="drawerUserName">مستخدم</h3>
+          <span id="drawerUserMeta">@user • ID: ---</span>
         </div>
       </div>
       <button class="close-drawer-btn" id="closeDrawerBtn">✕</button>
@@ -1335,8 +786,14 @@
             <span class="drawer-item-left"><span class="anim-emoji anim-wiggle">⭐</span> الشخصيات المخصصة</span>
             <span class="drawer-badge" id="customCountBadge">0</span>
           </button>
+          <button class="drawer-item" id="navSearchUsersBtn">
+            <span class="drawer-item-left">🔍 البحث عن مستخدمين (ID)</span>
+          </button>
           <button class="drawer-item" id="navSettingsBtn">
             <span class="drawer-item-left"><span class="anim-emoji anim-spin-slow">⚙️</span> الإعدادات وتخصيص الواجهة</span>
+          </button>
+          <button class="drawer-item" id="navLogoutBtn" style="color:#fca5a5;">
+            <span class="drawer-item-left">🚪 تسجيل الخروج</span>
           </button>
         </div>
       </div>
@@ -1362,13 +819,13 @@
   </div>
 
   <!-- ==================== 1. الواجهة الرئيسية ==================== -->
-  <section id="homeView" class="view active">
+  <section id="homeView" class="view">
     <header class="home-header">
       <div class="header-right-group">
         <button class="menu-btn" id="openDrawerHomeBtn" title="القائمة">☰</button>
         <div class="brand">
           <span>Yollo RP</span>
-          <span class="brand-badge">FREE</span>
+          <span class="brand-badge">ISOLATED</span>
         </div>
       </div>
       <div class="search-box">
@@ -1430,6 +887,21 @@
       <button id="sendBtn">إرسال</button>
     </div>
   </section>
+
+  <!-- ==================== نافذة البحث عن المستخدمين ==================== -->
+  <div class="modal-backdrop" id="userSearchModal">
+    <div class="modal">
+      <h2>🔍 البحث عن مستخدمين</h2>
+      <div>
+        <label>ابحث عبر ID العام أو الاسم أو @username</label>
+        <input type="search" id="userSearchInput" placeholder="مثال: 48291034 أو yanal" />
+      </div>
+      <div id="userSearchResults" style="display:flex; flex-direction:column; gap:8px; max-height:260px; overflow-y:auto;"></div>
+      <div class="modal-actions">
+        <button class="icon-btn" id="closeUserSearchBtn">إغلاق</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== نافذة معاينة الشخصية ==================== -->
   <div class="modal-backdrop bottom-sheet" id="previewModal">
@@ -1587,7 +1059,7 @@
         <div class="settings-group-title">إدارة البيانات والسجلات</div>
         <div style="display:flex; gap:8px;">
           <button class="secondary-cta" id="exportDataBtn">نسخ احتياطي</button>
-          <button class="secondary-cta" id="resetAllDataBtn" style="color:#fca5a5; border-color:rgba(239,68,68,0.4);">تصفير الكل</button>
+          <button class="secondary-cta" id="resetAllDataBtn" style="color:#fca5a5; border-color:rgba(239,68,68,0.4);">تصفير بياناتي</button>
         </div>
       </div>
 
@@ -1600,49 +1072,34 @@
   <script>
     const API_BASE_URL = "https://hin-18-1.onrender.com";
     const FALLBACK_AVATAR = "https://d.top4top.io/p_39776f6w21.jpg";
-
-    const STORAGE_KEY_CUSTOM_BOTS = "yollo_custom_bots_list_v4";
-    const STORAGE_KEY_BOT_OVERRIDES = "yollo_default_bot_overrides_v2";
-    const STORAGE_KEY_CHAT_META = "yollo_active_chats_meta_v1";
-    const STORAGE_KEY_BOT_PERSONAS = "yollo_per_bot_personas_v1";
+    const STORAGE_KEY_USER_SESSION = "yollo_isolated_user_session_v1";
     const STORAGE_KEY_PREFS = "yollo_ui_preferences_v2";
     const STORAGE_KEY_SERVER_BOTS_CACHE = "yollo_server_bots_cache_v1";
 
+    let currentUser = null;
+    let pendingAuthState = null;
+    let uploadedProfileAvatarBase64 = "";
     let serverBots = [];
+
     try {
+      currentUser = JSON.parse(localStorage.getItem(STORAGE_KEY_USER_SESSION) || "null");
       serverBots = JSON.parse(localStorage.getItem(STORAGE_KEY_SERVER_BOTS_CACHE) || "[]");
     } catch {}
 
+    function userStoragePrefix() {
+      return currentUser?.uid ? `u_${currentUser.uid}_` : "guest_";
+    }
+
+    function getAuthHeaders(extra = {}) {
+      return {
+        "Content-Type": "application/json",
+        ...(currentUser?.uid ? { "x-user-uid": currentUser.uid } : {}),
+        ...(currentUser?.xid ? { "x-user-xid": currentUser.xid } : {}),
+        ...extra
+      };
+    }
+
     const unlockedBotsInMemory = new Set();
-    let hiddenTimestamp = 0;
-
-    window.addEventListener("pageshow", (event) => {
-      if (event.persisted) {
-        unlockedBotsInMemory.clear();
-        if (currentBot && getBotChatMeta(currentBot.id).password) {
-          chatView.classList.remove("active");
-          homeView.classList.add("active");
-          renderBotsGrid();
-        }
-      }
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        hiddenTimestamp = Date.now();
-      } else if (hiddenTimestamp && Date.now() - hiddenTimestamp > 3000) {
-        unlockedBotsInMemory.clear();
-        hiddenTimestamp = 0;
-        if (currentBot && getBotChatMeta(currentBot.id).password) {
-          const lockedBot = currentBot;
-          currentBot = null;
-          chatView.classList.remove("active");
-          homeView.classList.add("active");
-          renderBotsGrid();
-          requestOpenBotChat(lockedBot);
-        }
-      }
-    });
 
     function syncDeviceViewport() {
       const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
@@ -1653,9 +1110,7 @@
     }
     syncDeviceViewport();
     window.addEventListener("resize", syncDeviceViewport);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", syncDeviceViewport);
-    }
+    if (window.visualViewport) window.visualViewport.addEventListener("resize", syncDeviceViewport);
 
     const DEFAULT_BOTS = [
       {
@@ -1673,27 +1128,37 @@
         sendWelcomeImage: true,
         initialQuickReplies: [
           { label: "مرحبا", text: "مرحبا" },
-          { label: "*ينظر حوله بدهشة*", text: "*ينظر حوله في المنزل المتهالك بدهشة* من أنتِ؟ وكيف دخلتِ إلى هنا؟" },
-          { label: "أخبريني عن المزرعة", text: "مرحباً إيما، أنا صاحب المزرعة الجديد. أخبريني ما الذي حدث لهذا المكان؟" },
-          { label: "ما سر الكعك؟", text: "سمعت أنكِ تحبين الخبز، ما الذي تطبخينه هنا؟" }
+          { label: "*ينظر حوله بدهشة*", text: "*ينظر حوله في المنزل المتهالك بدهشة* من أنتِ؟ وكيف دخلتِ إلى هنا؟" }
         ]
       }
     ];
 
+    // عناصر المصادقة
+    const authView = document.getElementById("authView");
+    const authCredentialsStep = document.getElementById("authCredentialsStep");
+    const authProfileStep = document.getElementById("authProfileStep");
+    const tabLoginBtn = document.getElementById("tabLoginBtn");
+    const tabSignupBtn = document.getElementById("tabSignupBtn");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const authErrorBox = document.getElementById("authErrorBox");
+    const profileErrorBox = document.getElementById("profileErrorBox");
+    const profileAvatarPreview = document.getElementById("profileAvatarPreview");
+    const profileAvatarFileInput = document.getElementById("profileAvatarFileInput");
+    const profileUsernameInput = document.getElementById("profileUsernameInput");
+    const completeProfileBtn = document.getElementById("completeProfileBtn");
+
+    // عناصر الواجهة الرئيسية والمحادثة
+    const homeView = document.getElementById("homeView");
+    const chatView = document.getElementById("chatView");
     const drawerBackdrop = document.getElementById("drawerBackdrop");
     const sidebarDrawer = document.getElementById("sidebarDrawer");
-    const openDrawerHomeBtn = document.getElementById("openDrawerHomeBtn");
-    const openDrawerChatBtn = document.getElementById("openDrawerChatBtn");
-    const closeDrawerBtn = document.getElementById("closeDrawerBtn");
-    const drawerStatsText = document.getElementById("drawerStatsText");
+    const drawerUserAvatar = document.getElementById("drawerUserAvatar");
+    const drawerUserName = document.getElementById("drawerUserName");
+    const drawerUserMeta = document.getElementById("drawerUserMeta");
     const customCountBadge = document.getElementById("customCountBadge");
     const activeChatsCountLabel = document.getElementById("activeChatsCountLabel");
     const drawerRecentList = document.getElementById("drawerRecentList");
-
-    const navCreateBotBtn = document.getElementById("navCreateBotBtn");
-    const navHomeBtn = document.getElementById("navHomeBtn");
-    const navCustomBtn = document.getElementById("navCustomBtn");
-    const navSettingsBtn = document.getElementById("navSettingsBtn");
 
     const chatContextMenu = document.getElementById("chatContextMenu");
     const ctxPinBtn = document.getElementById("ctxPinBtn");
@@ -1707,36 +1172,17 @@
     const lockModalTitle = document.getElementById("lockModalTitle");
     const lockModalDesc = document.getElementById("lockModalDesc");
     const lockPasswordInput = document.getElementById("lockPasswordInput");
-    const cancelLockBtn = document.getElementById("cancelLockBtn");
-    const confirmLockBtn = document.getElementById("confirmLockBtn");
-
     const personaModal = document.getElementById("personaModal");
     const personaModalTitle = document.getElementById("personaModalTitle");
-    const personaNameInput = document.getElementById("personaNameInput");
-    const personaTitleInput = document.getElementById("personaTitleInput");
-    const personaAppearanceInput = document.getElementById("personaAppearanceInput");
-    const personaToneInput = document.getElementById("personaToneInput");
-    const personaBioInput = document.getElementById("personaBioInput");
-    const cancelPersonaBtn = document.getElementById("cancelPersonaBtn");
-    const savePersonaBtn = document.getElementById("savePersonaBtn");
-
     const settingsModal = document.getElementById("settingsModal");
-    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
-    const toggleQuickRepliesBtn = document.getElementById("toggleQuickRepliesBtn");
-    const toggleFormatBarBtn = document.getElementById("toggleFormatBarBtn");
-    const toggleAmbientBtn = document.getElementById("toggleAmbientBtn");
-    const drawerSfxBtn = document.getElementById("drawerSfxBtn");
-    const exportDataBtn = document.getElementById("exportDataBtn");
-    const resetAllDataBtn = document.getElementById("resetAllDataBtn");
+    const userSearchModal = document.getElementById("userSearchModal");
+    const userSearchInput = document.getElementById("userSearchInput");
+    const userSearchResults = document.getElementById("userSearchResults");
 
-    const homeView = document.getElementById("homeView");
-    const chatView = document.getElementById("chatView");
     const ambientBg = document.getElementById("ambientBg");
     const botsGrid = document.getElementById("botsGrid");
     const searchInput = document.getElementById("searchInput");
     const categoryTabs = document.getElementById("categoryTabs");
-
-    const backBtn = document.getElementById("backBtn");
     const chatHeaderAvatar = document.getElementById("chatHeaderAvatar");
     const chatHeaderName = document.getElementById("chatHeaderName");
     const chatContainer = document.getElementById("chatContainer");
@@ -1746,20 +1192,11 @@
     const statusText = document.getElementById("statusText");
     const quickBar = document.getElementById("quickBar");
     const formatToolbar = document.getElementById("formatToolbar");
-    const clearBtn = document.getElementById("clearBtn");
 
     const previewModal = document.getElementById("previewModal");
-    const previewAvatar = document.getElementById("previewAvatar");
-    const previewName = document.getElementById("previewName");
-    const previewTags = document.getElementById("previewTags");
-    const previewBio = document.getElementById("previewBio");
-    const startChatNowBtn = document.getElementById("startChatNowBtn");
-    const closePreviewBtn = document.getElementById("closePreviewBtn");
-
     const botEditorModal = document.getElementById("botEditorModal");
     const botEditorTitle = document.getElementById("botEditorTitle");
     const editorWelcomeImgToggle = document.getElementById("editorWelcomeImgToggle");
-    const cancelBotEditorBtn = document.getElementById("cancelBotEditorBtn");
     const saveBotEditorBtn = document.getElementById("saveBotEditorBtn");
 
     let activeCategory = "all";
@@ -1770,29 +1207,263 @@
     let contextMenuBot = null;
     let lockActionState = null;
     let editorSendWelcomeImg = false;
-
     let messages = [];
     let isSending = false;
     let lastUserPromptText = "";
 
-    let prefs = {
-      accent: "#6366f1",
-      accentSec: "#3b82f6",
-      fontSize: "14.5px",
-      ambient: true,
-      quickReplies: true,
-      formatBar: true,
-      sfx: true
-    };
+    // ==================== منطق نظام المصادقة (المرحلة 1 و 2) ====================
+    tabLoginBtn.addEventListener("click", () => {
+      tabLoginBtn.classList.add("active");
+      tabSignupBtn.classList.remove("active");
+      loginForm.style.display = "flex";
+      signupForm.style.display = "none";
+      authErrorBox.style.display = "none";
+    });
 
-    try {
-      const savedPrefs = JSON.parse(localStorage.getItem(STORAGE_KEY_PREFS) || "{}");
-      prefs = { ...prefs, ...savedPrefs };
-    } catch {}
+    tabSignupBtn.addEventListener("click", () => {
+      tabSignupBtn.classList.add("active");
+      tabLoginBtn.classList.remove("active");
+      signupForm.style.display = "flex";
+      loginForm.style.display = "none";
+      authErrorBox.style.display = "none";
+    });
 
-    function savePrefs() {
-      localStorage.setItem(STORAGE_KEY_PREFS, JSON.stringify(prefs));
+    function showAuthError(box, msg) {
+      box.textContent = msg;
+      box.style.display = "block";
     }
+
+    // تسجيل الدخول
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      authErrorBox.style.display = "none";
+      const btn = document.getElementById("loginSubmitBtn");
+      btn.disabled = true;
+      btn.textContent = "⏳ جاري التحقق...";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            identifier: document.getElementById("loginIdentifierInput").value.trim(),
+            password: document.getElementById("loginPasswordInput").value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || "فشل تسجيل الدخول");
+
+        if (data.step === "profile_setup") {
+          pendingAuthState = { pendingToken: data.pendingToken, email: data.user.email, name: data.user.name };
+          profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(data.user.name)}`;
+          authCredentialsStep.style.display = "none";
+          authProfileStep.style.display = "flex";
+        } else {
+          finalizeUserLogin(data.user);
+        }
+      } catch (err) {
+        showAuthError(authErrorBox, err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "دخول إلى المنصة";
+      }
+    });
+
+    // المرحلة 1: إنشاء حساب (@gmail.com فقط)
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      authErrorBox.style.display = "none";
+      const name = document.getElementById("signupNameInput").value.trim();
+      const email = document.getElementById("signupEmailInput").value.trim().toLowerCase();
+      const password = document.getElementById("signupPasswordInput").value;
+
+      if (!email.endsWith("@gmail.com")) {
+        return showAuthError(authErrorBox, "يُقبل البريد الإلكتروني المنتهي بـ @gmail.com فقط.");
+      }
+
+      const btn = document.getElementById("signupSubmitBtn");
+      btn.disabled = true;
+      btn.textContent = "⏳ جاري إنشاء الحساب...";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || "فشل إنشاء الحساب");
+
+        pendingAuthState = { pendingToken: data.pendingToken, email, name };
+        profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`;
+        authCredentialsStep.style.display = "none";
+        authProfileStep.style.display = "flex";
+      } catch (err) {
+        showAuthError(authErrorBox, err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "متابعة لإعداد البروفايل ←";
+      }
+    });
+
+    // رفع وضغط صورة البروفايل
+    profileAvatarFileInput.addEventListener("change", (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxDim = 256;
+          const scale = Math.min(maxDim / img.width, maxDim / img.height, 1);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          uploadedProfileAvatarBase64 = canvas.toDataURL("image/jpeg", 0.82);
+          profileAvatarPreview.src = uploadedProfileAvatarBase64;
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // المرحلة 2: حفظ اسم المستخدم الفريد والصورة وتوليد ID / UID / XID
+    completeProfileBtn.addEventListener("click", async () => {
+      profileErrorBox.style.display = "none";
+      const username = profileUsernameInput.value.trim().toLowerCase().replace(/^@+/, "");
+      if (!username) return showAuthError(profileErrorBox, "يرجى إدخال اسم المستخدم.");
+
+      completeProfileBtn.disabled = true;
+      completeProfileBtn.textContent = "⏳ جاري تفعيل طبقات الحماية...";
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/complete-profile`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            pendingToken: pendingAuthState?.pendingToken,
+            email: pendingAuthState?.email,
+            username,
+            avatarUrl: uploadedProfileAvatarBase64 || profileAvatarPreview.src
+          })
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || "فشل حفظ البروفايل");
+
+        finalizeUserLogin(data.user);
+      } catch (err) {
+        showAuthError(profileErrorBox, err.message);
+      } finally {
+        completeProfileBtn.disabled = false;
+        completeProfileBtn.textContent = "حفظ وتفعيل الحساب ✅";
+      }
+    });
+
+    async function finalizeUserLogin(userObj) {
+      currentUser = userObj;
+      localStorage.setItem(STORAGE_KEY_USER_SESSION, JSON.stringify(userObj));
+      updateUserHeaderUI();
+
+      authView.classList.remove("active");
+      homeView.classList.add("active");
+
+      await loadServerBots();
+      await syncUserIsolatedChatsFromServer();
+      renderBotsGrid();
+      updateDrawerContent();
+    }
+
+    function updateUserHeaderUI() {
+      if (!currentUser) return;
+      drawerUserAvatar.src = currentUser.avatarUrl || FALLBACK_AVATAR;
+      drawerUserName.textContent = currentUser.name;
+      drawerUserMeta.textContent = `@${currentUser.username} • ID: ${currentUser.id}`;
+    }
+
+    document.getElementById("navLogoutBtn").addEventListener("click", () => {
+      closeDrawer();
+      currentUser = null;
+      localStorage.removeItem(STORAGE_KEY_USER_SESSION);
+      unlockedBotsInMemory.clear();
+      chatView.classList.remove("active");
+      homeView.classList.remove("active");
+      authCredentialsStep.style.display = "flex";
+      authProfileStep.style.display = "none";
+      authView.classList.add("active");
+    });
+
+    // ==================== مزامنة السجلات المعزولة للمستخدم من السيرفر ====================
+    async function syncUserIsolatedChatsFromServer() {
+      if (!currentUser) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/user/active-chats`, {
+          headers: getAuthHeaders()
+        });
+        const data = await res.json();
+        if (res.ok && data.ok && data.chats) {
+          const allMeta = getAllChatMeta();
+          const allPersonas = getAllBotPersonas();
+
+          for (const [botKey, record] of Object.entries(data.chats)) {
+            if (record.meta) allMeta[botKey] = record.meta;
+            if (record.persona) allPersonas[botKey] = record.persona;
+            if (Array.isArray(record.messages) && record.messages.length > 0) {
+              localStorage.setItem(`${userStoragePrefix()}chat_${botKey}`, JSON.stringify(record.messages));
+            }
+          }
+          localStorage.setItem(`${userStoragePrefix()}meta`, JSON.stringify(allMeta));
+          localStorage.setItem(`${userStoragePrefix()}personas`, JSON.stringify(allPersonas));
+        }
+      } catch (err) {
+        console.warn("Sync user isolated chats warning:", err);
+      }
+    }
+
+    // ==================== البحث عن المستخدمين بالـ ID العام أو الاسم ====================
+    document.getElementById("navSearchUsersBtn").addEventListener("click", () => {
+      closeDrawer();
+      userSearchInput.value = "";
+      userSearchResults.innerHTML = `<p style="font-size:12px; color:var(--text-action);">اكتب رقم ID أو اسم المستخدم للبحث...</p>`;
+      userSearchModal.classList.add("open");
+      setTimeout(() => userSearchInput.focus(), 50);
+    });
+
+    document.getElementById("closeUserSearchBtn").addEventListener("click", () => {
+      userSearchModal.classList.remove("open");
+    });
+
+    userSearchInput.addEventListener("input", async () => {
+      const q = userSearchInput.value.trim();
+      if (!q) {
+        userSearchResults.innerHTML = "";
+        return;
+      }
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/users/search?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        if (!data.results || data.results.length === 0) {
+          userSearchResults.innerHTML = `<p style="font-size:12px; color:var(--text-action);">لا توجد نتائج مطابقة.</p>`;
+          return;
+        }
+        userSearchResults.innerHTML = data.results.map(u => `
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--bg-input); border-radius:11px; border:1px solid var(--border-color);">
+            <img src="${escapeHtml(u.avatarUrl)}" onerror="this.src='${FALLBACK_AVATAR}'" style="width:38px; height:38px; border-radius:50%; object-fit:cover;" />
+            <div style="flex:1;">
+              <div style="font-size:13.5px; font-weight:700; color:#fff;">${escapeHtml(u.name)}</div>
+              <div style="font-size:11.5px; color:#a5b4fc; direction:ltr; text-align:right;">@${escapeHtml(u.username)} • ID: ${escapeHtml(u.id)}</div>
+            </div>
+          </div>
+        `).join("");
+      } catch {}
+    });
+
+    // ==================== إعدادات الواجهة والأصوات ====================
+    let prefs = { accent: "#6366f1", accentSec: "#3b82f6", fontSize: "14.5px", ambient: true, quickReplies: true, formatBar: true, sfx: true };
+    try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(STORAGE_KEY_PREFS) || "{}") }; } catch {}
+
+    function savePrefs() { localStorage.setItem(STORAGE_KEY_PREFS, JSON.stringify(prefs)); }
 
     function applyPreferences() {
       document.documentElement.style.setProperty("--accent", prefs.accent);
@@ -1800,69 +1471,34 @@
       document.documentElement.style.setProperty("--chat-font-size", prefs.fontSize);
       document.documentElement.style.setProperty("--ambient-opacity", prefs.ambient ? "0.14" : "0");
 
-      document.querySelectorAll(".swatch-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.accent === prefs.accent);
-      });
+      document.querySelectorAll(".swatch-btn").forEach(b => b.classList.toggle("active", b.dataset.accent === prefs.accent));
+      document.querySelectorAll(".size-btn").forEach(b => b.classList.toggle("active", b.dataset.size === prefs.fontSize));
 
-      document.querySelectorAll(".size-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.size === prefs.fontSize);
-      });
-
-      toggleAmbientBtn.textContent = prefs.ambient ? "مفعّل" : "مخفي";
-      toggleAmbientBtn.classList.toggle("on", prefs.ambient);
+      const ambBtn = document.getElementById("toggleAmbientBtn");
+      ambBtn.textContent = prefs.ambient ? "مفعّل" : "مخفي";
+      ambBtn.classList.toggle("on", prefs.ambient);
 
       quickBar.classList.toggle("hidden", !prefs.quickReplies);
-      toggleQuickRepliesBtn.textContent = prefs.quickReplies ? "مفعّل" : "مخفي";
-      toggleQuickRepliesBtn.classList.toggle("on", prefs.quickReplies);
+      const qrBtn = document.getElementById("toggleQuickRepliesBtn");
+      qrBtn.textContent = prefs.quickReplies ? "مفعّل" : "مخفي";
+      qrBtn.classList.toggle("on", prefs.quickReplies);
 
       formatToolbar.classList.toggle("hidden", !prefs.formatBar);
-      toggleFormatBarBtn.textContent = prefs.formatBar ? "مفعّل" : "مخفي";
-      toggleFormatBarBtn.classList.toggle("on", prefs.formatBar);
+      const fbBtn = document.getElementById("toggleFormatBarBtn");
+      fbBtn.textContent = prefs.formatBar ? "مفعّل" : "مخفي";
+      fbBtn.classList.toggle("on", prefs.formatBar);
 
-      drawerSfxBtn.textContent = prefs.sfx ? "مفعّل" : "مكتوم";
-      drawerSfxBtn.classList.toggle("on", prefs.sfx);
+      const sfxBtn = document.getElementById("drawerSfxBtn");
+      sfxBtn.textContent = prefs.sfx ? "مفعّل" : "مكتوم";
+      sfxBtn.classList.toggle("on", prefs.sfx);
     }
 
-    document.querySelectorAll(".swatch-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        prefs.accent = btn.dataset.accent;
-        prefs.accentSec = btn.dataset.sec;
-        savePrefs();
-        applyPreferences();
-      });
-    });
-
-    document.querySelectorAll(".size-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        prefs.fontSize = btn.dataset.size;
-        savePrefs();
-        applyPreferences();
-      });
-    });
-
-    toggleAmbientBtn.addEventListener("click", () => {
-      prefs.ambient = !prefs.ambient;
-      savePrefs();
-      applyPreferences();
-    });
-
-    toggleQuickRepliesBtn.addEventListener("click", () => {
-      prefs.quickReplies = !prefs.quickReplies;
-      savePrefs();
-      applyPreferences();
-    });
-
-    toggleFormatBarBtn.addEventListener("click", () => {
-      prefs.formatBar = !prefs.formatBar;
-      savePrefs();
-      applyPreferences();
-    });
-
-    drawerSfxBtn.addEventListener("click", () => {
-      prefs.sfx = !prefs.sfx;
-      savePrefs();
-      applyPreferences();
-    });
+    document.querySelectorAll(".swatch-btn").forEach(b => b.addEventListener("click", () => { prefs.accent = b.dataset.accent; prefs.accentSec = b.dataset.sec; savePrefs(); applyPreferences(); }));
+    document.querySelectorAll(".size-btn").forEach(b => b.addEventListener("click", () => { prefs.fontSize = b.dataset.size; savePrefs(); applyPreferences(); }));
+    document.getElementById("toggleAmbientBtn").addEventListener("click", () => { prefs.ambient = !prefs.ambient; savePrefs(); applyPreferences(); });
+    document.getElementById("toggleQuickRepliesBtn").addEventListener("click", () => { prefs.quickReplies = !prefs.quickReplies; savePrefs(); applyPreferences(); });
+    document.getElementById("toggleFormatBarBtn").addEventListener("click", () => { prefs.formatBar = !prefs.formatBar; savePrefs(); applyPreferences(); });
+    document.getElementById("drawerSfxBtn").addEventListener("click", () => { prefs.sfx = !prefs.sfx; savePrefs(); applyPreferences(); });
 
     function playUiPop(freq = 520) {
       if (!prefs.sfx) return;
@@ -1881,129 +1517,110 @@
       } catch {}
     }
 
-    // ==================== مزامنة قاعدة بيانات البوتات الدائمة مع السيرفر ====================
+    // ==================== مزامنة قاعدة بيانات البوتات والسجلات المعزولة ====================
     async function loadServerBots() {
       try {
-        const res = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots?t=${Date.now()}`);
+        const res = await fetch(`${API_BASE_URL}/api/bots?t=${Date.now()}`);
         const data = await res.json();
         const botsList = Array.isArray(data) ? data : (Array.isArray(data.bots) ? data.bots : null);
-
         if (res.ok && botsList) {
           serverBots = botsList;
           localStorage.setItem(STORAGE_KEY_SERVER_BOTS_CACHE, JSON.stringify(serverBots));
           renderBotsGrid();
           updateDrawerContent();
         }
-      } catch (err) {
-        console.warn("Could not load server bots:", err);
-      }
+      } catch {}
     }
 
     async function fetchBotDedicatedDB(bot) {
-      if (!bot) return null;
+      if (!bot || !currentUser) return null;
       try {
-        const res = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bot-db/${encodeURIComponent(bot.id)}`);
+        const res = await fetch(`${API_BASE_URL}/api/bot-db/${encodeURIComponent(bot.id)}`, {
+          headers: getAuthHeaders()
+        });
         const data = await res.json();
-        if (res.ok && data.ok && data.db) {
-          return data.db;
-        }
-      } catch (err) {
-        console.warn("Fetch bot DB warning:", err);
-      }
+        if (res.ok && data.ok && data.db) return data.db;
+      } catch {}
       return null;
     }
 
     function syncBotDedicatedDB(bot, payload) {
-      if (!bot) return;
-      fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bot-db/${encodeURIComponent(bot.id)}`, {
+      if (!bot || !currentUser) return;
+      fetch(`${API_BASE_URL}/api/bot-db/${encodeURIComponent(bot.id)}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getAuthHeaders(),
         body: JSON.stringify(payload)
-      }).catch(err => console.warn("Sync bot DB warning:", err));
+      }).catch(() => {});
     }
 
-    // ==================== دوال الاتصال بمسارات الحذف على السيرفر ====================
     async function deleteRemoteMessage(serverId, botObj = currentBot) {
-      if (!serverId) return;
+      if (!serverId || !currentUser) return;
       try {
-        await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/delete-message`, {
+        await fetch(`${API_BASE_URL}/api/delete-message`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: getAuthHeaders(),
           body: JSON.stringify({
             messageId: String(serverId),
-            botId: botObj?.botId || 148005,
-            botKey: botObj?.id || "",
-            sessionId: botObj?.sessionId || 21702378
+            botId: botObj?.botId,
+            botKey: botObj?.id
           })
         });
-      } catch (err) {
-        console.warn("Delete message sync error:", err);
-      }
+      } catch {}
     }
 
-    async function clearRemoteSession(botMessages = messages, botObj = currentBot) {
-      const messageIds = botMessages
-        .map(m => m.serverId)
-        .filter(Boolean);
-
+    async function clearRemoteSession(botObj = currentBot) {
+      if (!botObj || !currentUser) return;
       try {
-        await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/clear`, {
+        await fetch(`${API_BASE_URL}/api/clear`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: getAuthHeaders(),
           body: JSON.stringify({
-            messageIds,
-            botId: botObj?.botId || 148005,
-            botKey: botObj?.id || "",
-            sessionId: botObj?.sessionId || 21702378,
-            greeting: botObj?.greeting || ""
+            botId: botObj.botId,
+            botKey: botObj.id,
+            greeting: botObj.greeting || ""
           })
         });
-      } catch (err) {
-        console.warn("Clear session sync error:", err);
-      }
+      } catch {}
     }
 
-    // ==================== إدارة قفل كلمة السر والجلسات ====================
-    function isBotUnlockedThisSession(botId) {
-      return unlockedBotsInMemory.has(String(botId));
+    // زر "حذف السجل نهائياً": يمرر الطلب لـ Yollo أولاً ويمسح سجل المستخدم الحالي فقط
+    async function executeHardDeleteHistory(bot) {
+      if (!bot || !currentUser) return null;
+      const res = await fetch(`${API_BASE_URL}/api/hard-delete-history`, {
+        method: "POST",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ botId: bot.botId, botKey: bot.id })
+      });
+      return await res.json();
     }
 
+    // ==================== إدارة قفل كلمة السر والسجلات المحلية للمستخدم ====================
+    function isBotUnlockedThisSession(botId) { return unlockedBotsInMemory.has(String(botId)); }
     function markBotUnlockedThisSession(botId, unlocked = true) {
       const key = String(botId);
-      if (unlocked) {
-        unlockedBotsInMemory.add(key);
-      } else {
-        unlockedBotsInMemory.delete(key);
-      }
+      if (unlocked) unlockedBotsInMemory.add(key); else unlockedBotsInMemory.delete(key);
     }
 
     function getAllChatMeta() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY_CHAT_META) || "{}");
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(`${userStoragePrefix()}meta`) || "{}"); } catch { return {}; }
     }
-
     function getBotChatMeta(botId) {
       const all = getAllChatMeta();
       return all[String(botId)] || { started: false, pinned: false, password: "" };
     }
-
     function updateBotChatMeta(botId, patch) {
       const all = getAllChatMeta();
       const key = String(botId);
       all[key] = { ...getBotChatMeta(key), ...patch };
-      localStorage.setItem(STORAGE_KEY_CHAT_META, JSON.stringify(all));
+      localStorage.setItem(`${userStoragePrefix()}meta`, JSON.stringify(all));
       const botObj = getAllBots().find(b => String(b.id) === key);
       if (botObj) syncBotDedicatedDB(botObj, { meta: all[key] });
     }
-
     function removeBotChatMeta(botId) {
       const all = getAllChatMeta();
       const key = String(botId);
       delete all[key];
-      localStorage.setItem(STORAGE_KEY_CHAT_META, JSON.stringify(all));
+      localStorage.setItem(`${userStoragePrefix()}meta`, JSON.stringify(all));
       markBotUnlockedThisSession(key, false);
     }
 
@@ -2014,24 +1631,17 @@
       return msgs.some(m => m.role === "user");
     }
 
-    // ==================== إدارة البيرسونا الخاصة بكل بوت ====================
     function getAllBotPersonas() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY_BOT_PERSONAS) || "{}");
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(`${userStoragePrefix()}personas`) || "{}"); } catch { return {}; }
     }
-
     function getBotPersona(botId) {
       const all = getAllBotPersonas();
-      return all[String(botId)] || { name: "", title: "", appearance: "", tone: "", bio: "" };
+      return all[String(botId)] || { name: currentUser?.name || "", title: "", appearance: "", tone: "", bio: "" };
     }
-
     function saveBotPersona(botId, data) {
       const all = getAllBotPersonas();
       all[String(botId)] = data;
-      localStorage.setItem(STORAGE_KEY_BOT_PERSONAS, JSON.stringify(all));
+      localStorage.setItem(`${userStoragePrefix()}personas`, JSON.stringify(all));
       const botObj = getAllBots().find(b => String(b.id) === String(botId));
       if (botObj) syncBotDedicatedDB(botObj, { persona: data });
     }
@@ -2040,80 +1650,57 @@
       personaBotTarget = bot;
       const p = getBotPersona(bot.id);
       personaModalTitle.textContent = `🎭 هويتك مع ${bot.name}`;
-      personaNameInput.value = p.name || "";
-      personaTitleInput.value = p.title || "";
-      personaAppearanceInput.value = p.appearance || "";
-      personaToneInput.value = p.tone || "";
-      personaBioInput.value = p.bio || "";
+      document.getElementById("personaNameInput").value = p.name || "";
+      document.getElementById("personaTitleInput").value = p.title || "";
+      document.getElementById("personaAppearanceInput").value = p.appearance || "";
+      document.getElementById("personaToneInput").value = p.tone || "";
+      document.getElementById("personaBioInput").value = p.bio || "";
       personaModal.classList.add("open");
     }
 
-    cancelPersonaBtn.addEventListener("click", () => {
-      personaModal.classList.remove("open");
-      personaBotTarget = null;
-    });
-
-    savePersonaBtn.addEventListener("click", () => {
+    document.getElementById("cancelPersonaBtn").addEventListener("click", () => { personaModal.classList.remove("open"); personaBotTarget = null; });
+    document.getElementById("savePersonaBtn").addEventListener("click", () => {
       if (!personaBotTarget) return;
       saveBotPersona(personaBotTarget.id, {
-        name: personaNameInput.value.trim(),
-        title: personaTitleInput.value.trim(),
-        appearance: personaAppearanceInput.value.trim(),
-        tone: personaToneInput.value,
-        bio: personaBioInput.value.trim()
+        name: document.getElementById("personaNameInput").value.trim(),
+        title: document.getElementById("personaTitleInput").value.trim(),
+        appearance: document.getElementById("personaAppearanceInput").value.trim(),
+        tone: document.getElementById("personaToneInput").value,
+        bio: document.getElementById("personaBioInput").value.trim()
       });
       personaModal.classList.remove("open");
       personaBotTarget = null;
     });
 
     function getBotOverrides() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY_BOT_OVERRIDES) || "{}");
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(`${userStoragePrefix()}overrides`) || "{}"); } catch { return {}; }
     }
 
     function getAllBots() {
       const overrides = getBotOverrides();
       const map = new Map();
-
       DEFAULT_BOTS.forEach(b => map.set(b.id, overrides[b.id] ? { ...b, ...overrides[b.id] } : b));
       serverBots.forEach(b => map.set(b.id, overrides[b.id] ? { ...b, ...overrides[b.id] } : b));
-
       let custom = [];
-      try {
-        custom = JSON.parse(localStorage.getItem(STORAGE_KEY_CUSTOM_BOTS) || "[]");
-      } catch {}
+      try { custom = JSON.parse(localStorage.getItem(`${userStoragePrefix()}custom_bots`) || "[]"); } catch {}
       custom.forEach(b => map.set(b.id, b));
-
       return Array.from(map.values());
     }
 
     function escapeHtml(text) {
-      return String(text || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+      return String(text || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     // ==================== القائمة الجانبية وقائمة الثلاث نقاط ====================
-    function closeContextMenu() {
-      chatContextMenu.classList.remove("open");
-      contextMenuBot = null;
-    }
-
+    function closeContextMenu() { chatContextMenu.classList.remove("open"); contextMenuBot = null; }
     document.addEventListener("click", (e) => {
-      if (!e.target.closest("#chatContextMenu") && !e.target.closest(".dots-menu-btn")) {
-        closeContextMenu();
-      }
+      if (!e.target.closest("#chatContextMenu") && !e.target.closest(".dots-menu-btn")) closeContextMenu();
     });
 
     function openContextMenu(e, bot) {
       e.stopPropagation();
       contextMenuBot = bot;
       const meta = getBotChatMeta(bot.id);
-
       ctxPinBtn.textContent = meta.pinned ? "📌 إلغاء التثبيت" : "📌 تثبيت المحادثة";
       ctxLockBtn.textContent = meta.password ? "🔓 إلغاء قفل كلمة السر" : "🔒 قفل المحادثة بكلمة سر";
 
@@ -2121,13 +1708,9 @@
       chatContextMenu.classList.add("open");
       const menuWidth = chatContextMenu.offsetWidth || 205;
       const menuHeight = chatContextMenu.offsetHeight || 200;
-
       let left = Math.max(10, Math.min(rect.left, window.innerWidth - menuWidth - 10));
       let top = rect.bottom + 4;
-      if (top + menuHeight > window.innerHeight - 10) {
-        top = Math.max(10, rect.top - menuHeight - 4);
-      }
-
+      if (top + menuHeight > window.innerHeight - 10) top = Math.max(10, rect.top - menuHeight - 4);
       chatContextMenu.style.left = `${left}px`;
       chatContextMenu.style.top = `${top}px`;
     }
@@ -2146,7 +1729,6 @@
       const meta = getBotChatMeta(bot.id);
       closeContextMenu();
       closeDrawer();
-
       if (meta.password) {
         lockActionState = { mode: "remove", bot };
         lockModalTitle.textContent = "🔓 إلغاء قفل المحادثة";
@@ -2161,23 +1743,16 @@
       setTimeout(() => lockPasswordInput.focus(), 50);
     });
 
-    ctxEditBtn.addEventListener("click", () => {
-      if (!contextMenuBot) return;
-      const bot = contextMenuBot;
-      closeContextMenu();
-      closeDrawer();
-      openBotEditor(bot);
-    });
+    ctxEditBtn.addEventListener("click", () => { if (contextMenuBot) { const b = contextMenuBot; closeContextMenu(); closeDrawer(); openBotEditor(b); } });
 
     ctxCloneBtn.addEventListener("click", () => {
       if (!contextMenuBot) return;
       const botToClone = contextMenuBot;
       closeContextMenu();
       closeDrawer();
-
       openBotEditor(null);
-      botEditorTitle.textContent = `📋 استنساخ دائم: ${botToClone.name}`;
-      document.getElementById("editorBotName").value = `${botToClone.name} (نسخة)`;
+      botEditorTitle.textContent = `📋 استنساخ خاص: ${botToClone.name}`;
+      document.getElementById("editorBotName").value = `${botToClone.name} (نسختي)`;
       document.getElementById("editorBotAvatar").value = botToClone.avatarUrl || "";
       document.getElementById("editorBotBio").value = botToClone.bio || "";
       document.getElementById("editorBotGreeting").value = botToClone.greeting || "";
@@ -2185,22 +1760,19 @@
       updateEditorWelcomeToggleUI();
     });
 
-    ctxPersonaBtn.addEventListener("click", () => {
-      if (!contextMenuBot) return;
-      const bot = contextMenuBot;
-      closeContextMenu();
-      closeDrawer();
-      openPersonaModalForBot(bot);
-    });
+    ctxPersonaBtn.addEventListener("click", () => { if (contextMenuBot) { const b = contextMenuBot; closeContextMenu(); closeDrawer(); openPersonaModalForBot(b); } });
 
+    // تنفيذ "حذف السجل نهائياً" (حذف من Yollo + مسح من حساب المستخدم الحالي فقط + إخفاء من القائمة الجانبية)
     ctxDeleteBtn.addEventListener("click", async () => {
       if (!contextMenuBot) return;
       const bot = contextMenuBot;
       closeContextMenu();
 
-      if (confirm(`هل تريد حذف سجل محادثة "${bot.name}" بشكل نهائي من السيرفر؟`)) {
-        const botMsgs = loadBotMessages(bot);
-        await clearRemoteSession(botMsgs, bot);
+      if (confirm(`هل تريد حذف سجل محادثة "${bot.name}" وذكرياتها نهائياً من حسابك؟`)) {
+        const res = await executeHardDeleteHistory(bot);
+        if (!res || !res.ok) {
+          return alert(res?.error || "تعذر حذف السجل من السيرفر.");
+        }
 
         localStorage.removeItem(getStorageKey(bot));
         removeBotChatMeta(bot.id);
@@ -2215,21 +1787,14 @@
       }
     });
 
-    cancelLockBtn.addEventListener("click", () => {
-      lockModal.classList.remove("open");
-      lockActionState = null;
-    });
+    document.getElementById("cancelLockBtn").addEventListener("click", () => { lockModal.classList.remove("open"); lockActionState = null; });
 
     function submitLockModal() {
       if (!lockActionState) return;
       const pass = lockPasswordInput.value.trim();
       const { mode, bot } = lockActionState;
       const meta = getBotChatMeta(bot.id);
-
-      if (!pass) {
-        alert("يرجى إدخال كلمة السر.");
-        return;
-      }
+      if (!pass) return alert("يرجى إدخال كلمة السر.");
 
       if (mode === "set") {
         updateBotChatMeta(bot.id, { password: pass });
@@ -2237,23 +1802,15 @@
         lockModal.classList.remove("open");
         lockActionState = null;
         renderBotsGrid();
-        alert(`تم قفل محادثة "${bot.name}" بكلمة سر بنجاح.`);
       } else if (mode === "remove") {
-        if (pass !== meta.password) {
-          alert("كلمة السر غير صحيحة!");
-          return;
-        }
+        if (pass !== meta.password) return alert("كلمة السر غير صحيحة!");
         updateBotChatMeta(bot.id, { password: "" });
         markBotUnlockedThisSession(bot.id, false);
         lockModal.classList.remove("open");
         lockActionState = null;
         renderBotsGrid();
-        alert("تم إلغاء قفل المحادثة.");
       } else if (mode === "unlock_open") {
-        if (pass !== meta.password) {
-          alert("كلمة السر غير صحيحة!");
-          return;
-        }
+        if (pass !== meta.password) return alert("كلمة السر غير صحيحة!");
         markBotUnlockedThisSession(bot.id, true);
         lockModal.classList.remove("open");
         lockActionState = null;
@@ -2261,41 +1818,21 @@
       }
     }
 
-    confirmLockBtn.addEventListener("click", submitLockModal);
-    lockPasswordInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        submitLockModal();
-      }
-    });
+    document.getElementById("confirmLockBtn").addEventListener("click", submitLockModal);
+    lockPasswordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); submitLockModal(); } });
 
-    function openDrawer() {
-      updateDrawerContent();
-      drawerBackdrop.classList.add("open");
-      sidebarDrawer.classList.add("open");
-    }
-
-    function closeDrawer() {
-      closeContextMenu();
-      drawerBackdrop.classList.remove("open");
-      sidebarDrawer.classList.remove("open");
-    }
+    function openDrawer() { updateDrawerContent(); drawerBackdrop.classList.add("open"); sidebarDrawer.classList.add("open"); }
+    function closeDrawer() { closeContextMenu(); drawerBackdrop.classList.remove("open"); sidebarDrawer.classList.remove("open"); }
 
     function updateDrawerContent() {
       const allBots = getAllBots();
       const customCount = allBots.filter(b => b.isCustom).length;
-      drawerStatsText.textContent = `${allBots.length} شخصية متاحة`;
       customCountBadge.textContent = String(customCount);
-
       drawerRecentList.innerHTML = "";
 
       const activeBots = allBots
         .filter(bot => isChatActive(bot))
-        .sort((a, b) => {
-          const pinA = getBotChatMeta(a.id).pinned ? 1 : 0;
-          const pinB = getBotChatMeta(b.id).pinned ? 1 : 0;
-          return pinB - pinA;
-        });
+        .sort((a, b) => (getBotChatMeta(b.id).pinned ? 1 : 0) - (getBotChatMeta(a.id).pinned ? 1 : 0));
 
       activeChatsCountLabel.textContent = String(activeBots.length);
 
@@ -2323,15 +1860,8 @@
           <button type="button" class="dots-menu-btn" title="خيارات المحادثة">⋮</button>
         `;
 
-        item.querySelector(".recent-chat-main").onclick = () => {
-          closeDrawer();
-          requestOpenBotChat(bot);
-        };
-
-        item.querySelector(".dots-menu-btn").onclick = (e) => {
-          openContextMenu(e, bot);
-        };
-
+        item.querySelector(".recent-chat-main").onclick = () => { closeDrawer(); requestOpenBotChat(bot); };
+        item.querySelector(".dots-menu-btn").onclick = (e) => openContextMenu(e, bot);
         drawerRecentList.appendChild(item);
       });
 
@@ -2340,87 +1870,37 @@
       }
     }
 
-    openDrawerHomeBtn.addEventListener("click", openDrawer);
-    openDrawerChatBtn.addEventListener("click", openDrawer);
-    closeDrawerBtn.addEventListener("click", closeDrawer);
+    document.getElementById("openDrawerHomeBtn").addEventListener("click", openDrawer);
+    document.getElementById("openDrawerChatBtn").addEventListener("click", openDrawer);
+    document.getElementById("closeDrawerBtn").addEventListener("click", closeDrawer);
     drawerBackdrop.addEventListener("click", closeDrawer);
 
-    navCreateBotBtn.addEventListener("click", () => {
-      closeDrawer();
-      openBotEditor(null);
-    });
-
-    navHomeBtn.addEventListener("click", () => {
+    document.getElementById("navCreateBotBtn").addEventListener("click", () => { closeDrawer(); openBotEditor(null); });
+    document.getElementById("navHomeBtn").addEventListener("click", () => {
       closeDrawer();
       chatView.classList.remove("active");
       homeView.classList.add("active");
       activeCategory = "all";
-      categoryTabs.querySelectorAll(".filter-pill").forEach(b => {
-        b.classList.toggle("active", b.dataset.filter === "all");
-      });
+      categoryTabs.querySelectorAll(".filter-pill").forEach(b => b.classList.toggle("active", b.dataset.filter === "all"));
       renderBotsGrid();
     });
-
-    navCustomBtn.addEventListener("click", () => {
+    document.getElementById("navCustomBtn").addEventListener("click", () => {
       closeDrawer();
       chatView.classList.remove("active");
       homeView.classList.add("active");
       activeCategory = "custom";
-      categoryTabs.querySelectorAll(".filter-pill").forEach(b => {
-        b.classList.toggle("active", b.dataset.filter === "custom");
-      });
+      categoryTabs.querySelectorAll(".filter-pill").forEach(b => b.classList.toggle("active", b.dataset.filter === "custom"));
       renderBotsGrid();
     });
+    document.getElementById("navSettingsBtn").addEventListener("click", () => { closeDrawer(); settingsModal.classList.add("open"); });
+    document.getElementById("closeSettingsBtn").addEventListener("click", () => settingsModal.classList.remove("open"));
 
-    navSettingsBtn.addEventListener("click", () => {
-      closeDrawer();
-      settingsModal.classList.add("open");
-    });
-
-    closeSettingsBtn.addEventListener("click", () => settingsModal.classList.remove("open"));
-
-    exportDataBtn.addEventListener("click", async () => {
-      const backup = {
-        personas: getAllBotPersonas(),
-        overrides: getBotOverrides(),
-        chatMeta: getAllChatMeta(),
-        customBots: getAllBots().filter(b => b.isCustom),
-        chats: {}
-      };
-      getAllBots().forEach(b => {
-        backup.chats[b.id] = loadBotMessages(b);
-      });
-      try {
-        await navigator.clipboard.writeText(JSON.stringify(backup, null, 2));
-        alert("تم نسخ بياناتك ومحادثاتك إلى الحافظة!");
-      } catch {
-        alert("تعذر النسخ التلقائي.");
-      }
-    });
-
-    resetAllDataBtn.addEventListener("click", async () => {
-      if (confirm("هل أنت متأكد من مسح جميع المحادثات والتعديلات؟")) {
-        await clearRemoteSession(messages, currentBot);
-        localStorage.clear();
-        unlockedBotsInMemory.clear();
-        settingsModal.classList.remove("open");
-        chatView.classList.remove("active");
-        homeView.classList.add("active");
-        renderBotsGrid();
-        loadServerBots();
-      }
-    });
-
-    // ==================== محرر إنشاء وتعديل واستنساخ الشخصية (حفظ دائم) ====================
+    // ==================== محرر الشخصية المخصصة ====================
     function updateEditorWelcomeToggleUI() {
       editorWelcomeImgToggle.textContent = editorSendWelcomeImg ? "مفعّل" : "مخفي";
       editorWelcomeImgToggle.classList.toggle("on", editorSendWelcomeImg);
     }
-
-    editorWelcomeImgToggle.addEventListener("click", () => {
-      editorSendWelcomeImg = !editorSendWelcomeImg;
-      updateEditorWelcomeToggleUI();
-    });
+    editorWelcomeImgToggle.addEventListener("click", () => { editorSendWelcomeImg = !editorSendWelcomeImg; updateEditorWelcomeToggleUI(); });
 
     function openBotEditor(botToEdit = null) {
       editingBotTarget = botToEdit;
@@ -2443,159 +1923,64 @@
       botEditorModal.classList.add("open");
     }
 
-    cancelBotEditorBtn.addEventListener("click", () => {
-      botEditorModal.classList.remove("open");
-    });
+    document.getElementById("cancelBotEditorBtn").addEventListener("click", () => botEditorModal.classList.remove("open"));
 
-    function syncGreetingAndImageInMessages(msgList, bot) {
-      const updated = Array.isArray(msgList) ? [...msgList] : [];
-      const isLtr = /[a-zA-Z]{10,}/.test(bot.greeting) && !/[\u0600-\u06FF]/.test(bot.greeting);
-
-      if (updated.length > 0 && updated[0].role === "bot" && updated[0].type === "text") {
-        updated[0].content = bot.greeting;
-        updated[0].ltr = isLtr;
-      } else {
-        updated.unshift({
-          role: "bot",
-          type: "text",
-          ltr: isLtr,
-          content: bot.greeting
-        });
-      }
-
-      const hasWelcomeImgAtIndex1 = updated.length > 1 && updated[1].role === "bot" && updated[1].type === "image";
-
-      if (bot.sendWelcomeImage && bot.avatarUrl) {
-        if (hasWelcomeImgAtIndex1) {
-          updated[1].imageUrl = bot.avatarUrl;
-        } else {
-          updated.splice(1, 0, {
-            role: "bot",
-            type: "image",
-            imageUrl: bot.avatarUrl,
-            content: ""
-          });
-        }
-      } else {
-        if (hasWelcomeImgAtIndex1) {
-          updated.splice(1, 1);
-        }
-      }
-
-      return updated;
-    }
-
-    saveBotEditorBtn.addEventListener("click", async () => {
+    saveBotEditorBtn.addEventListener("click", () => {
       const name = document.getElementById("editorBotName").value.trim();
       const avatarUrl = document.getElementById("editorBotAvatar").value.trim() || FALLBACK_AVATAR;
       const bio = document.getElementById("editorBotBio").value.trim() || "شخصية تفاعلية مخصصة.";
       const greeting = document.getElementById("editorBotGreeting").value.trim() || "*تبتسم وتنظر إليك*\n“أهلاً بك!”";
-
-      if (!name) {
-        alert("يرجى إدخال اسم الشخصية.");
-        return;
-      }
+      if (!name) return alert("يرجى إدخال اسم الشخصية.");
 
       if (editingBotTarget) {
-        const updatedFields = {
-          name,
-          avatarUrl,
-          bio,
-          greeting,
-          sendWelcomeImage: editorSendWelcomeImg
-        };
-
+        const updatedFields = { name, avatarUrl, bio, greeting, sendWelcomeImage: editorSendWelcomeImg };
         if (editingBotTarget.isCustom) {
-          const customList = getAllBots().filter(b => b.isCustom).map(b =>
-            b.id === editingBotTarget.id ? { ...b, ...updatedFields } : b
-          );
-          localStorage.setItem(STORAGE_KEY_CUSTOM_BOTS, JSON.stringify(customList));
+          const customList = getAllBots().filter(b => b.isCustom).map(b => b.id === editingBotTarget.id ? { ...b, ...updatedFields } : b);
+          localStorage.setItem(`${userStoragePrefix()}custom_bots`, JSON.stringify(customList));
         } else {
           const overrides = getBotOverrides();
           overrides[editingBotTarget.id] = updatedFields;
-          localStorage.setItem(STORAGE_KEY_BOT_OVERRIDES, JSON.stringify(overrides));
+          localStorage.setItem(`${userStoragePrefix()}overrides`, JSON.stringify(overrides));
         }
-
         const refreshedBot = getAllBots().find(b => b.id === editingBotTarget.id);
         botEditorModal.classList.remove("open");
-
         if (refreshedBot) {
-          const existingMsgs = loadBotMessages(refreshedBot);
-          const syncedMsgs = syncGreetingAndImageInMessages(existingMsgs, refreshedBot);
-          localStorage.setItem(getStorageKey(refreshedBot), JSON.stringify(syncedMsgs));
-          syncBotDedicatedDB(refreshedBot, { bot: refreshedBot, messages: syncedMsgs });
-
-          fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "x-admin-key": "yollo_admin_2026" },
-            body: JSON.stringify(refreshedBot)
-          }).catch(() => {});
-
-          if (currentBot && currentBot.id === refreshedBot.id) {
-            messages = syncedMsgs;
-            proceedOpenBotChat(refreshedBot);
-          }
+          syncBotDedicatedDB(refreshedBot, { bot: refreshedBot });
+          if (currentBot && currentBot.id === refreshedBot.id) proceedOpenBotChat(refreshedBot);
         }
-        renderBotsGrid();
       } else {
-        // إنشاء أو استنساخ بوت جديد وحفظه بشكل دائم في قاعدة بيانات السيرفر (GitHub)
-        const originalBtnText = saveBotEditorBtn.textContent;
-        saveBotEditorBtn.disabled = true;
-        saveBotEditorBtn.textContent = "جاري الحفظ الدائم...";
-
         const newBot = {
-          id: `bot_${Date.now()}`,
-          botId: Math.floor(100000 + Math.random() * 900000),
-          sessionId: Math.floor(10000000 + Math.random() * 90000000),
+          id: `custom_${Date.now()}`,
+          botId: 148005,
           name,
           avatarUrl,
-          chatsCount: "جديد",
-          isCustom: false,
-          categories: ["all", "anime", "story"],
-          tags: ["مستنسخ", "قصة"],
+          chatsCount: "مخصصة",
+          isCustom: true,
+          categories: ["all", "custom", "story"],
+          tags: ["مخصصة", "قصة"],
           bio,
           greeting,
           sendWelcomeImage: editorSendWelcomeImg,
           initialQuickReplies: [
             { label: "مرحبا", text: "مرحبا" },
-            { label: "*ينظر باهتمام*", text: "*ينظر إليها باهتمام* من أنتِ؟" },
-            { label: "أخبريني عن نفسك", text: "أخبريني أكثر عن نفسك." }
+            { label: "*ينظر باهتمام*", text: "*ينظر إليها باهتمام* من أنتِ؟" }
           ]
         };
-
-        try {
-          const response = await fetch(`${API_BASE_URL.replace(/\/+$/, "")}/api/bots`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-admin-key": "yollo_admin_2026"
-            },
-            body: JSON.stringify(newBot)
-          });
-
-          const result = await response.json();
-          if (!response.ok || (!result.success && !result.ok)) {
-            throw new Error(result.error || "فشل الحفظ الدائم في قاعدة البيانات");
-          }
-
-          await loadServerBots();
-          botEditorModal.classList.remove("open");
-          alert(`تم حفظ "${newBot.name}" بشكل دائم في قاعدة البيانات وسيظهر لجميع المستخدمين!`);
-        } catch (err) {
-          alert(`خطأ أثناء الحفظ الدائم: ${err.message}`);
-        } finally {
-          saveBotEditorBtn.disabled = false;
-          saveBotEditorBtn.textContent = originalBtnText;
-        }
+        let customList = [];
+        try { customList = JSON.parse(localStorage.getItem(`${userStoragePrefix()}custom_bots`) || "[]"); } catch {}
+        customList.unshift(newBot);
+        localStorage.setItem(`${userStoragePrefix()}custom_bots`, JSON.stringify(customList));
+        botEditorModal.classList.remove("open");
       }
+      renderBotsGrid();
     });
 
     // ==================== الواجهة الرئيسية ومعاينة الشخصية ====================
     function renderBotsGrid() {
       const query = searchInput.value.trim().toLowerCase();
       botsGrid.innerHTML = "";
-
       const allBots = getAllBots();
+
       const filteredBots = allBots.filter(bot => {
         const matchesCat =
           activeCategory === "all" ||
@@ -2610,7 +1995,7 @@
       });
 
       if (filteredBots.length === 0) {
-        botsGrid.innerHTML = `<div class="empty-state">لا توجد شخصيات مطابقة هنا. يمكنك إنشاء شخصية جديدة من القائمة الجانبية ☰</div>`;
+        botsGrid.innerHTML = `<div class="empty-state">لا توجد شخصيات مطابقة هنا.</div>`;
         return;
       }
 
@@ -2638,46 +2023,31 @@
           </div>
         `;
 
-        card.onclick = () => {
-          if (active) {
-            requestOpenBotChat(bot);
-          } else {
-            openPreviewSheet(bot);
-          }
-        };
-
+        card.onclick = () => active ? requestOpenBotChat(bot) : openPreviewSheet(bot);
         botsGrid.appendChild(card);
       });
     }
 
     function openPreviewSheet(bot) {
       previewingBot = bot;
-      previewAvatar.src = bot.avatarUrl;
-      previewAvatar.onerror = () => { previewAvatar.src = FALLBACK_AVATAR; };
-      previewName.textContent = bot.name;
-      previewBio.textContent = bot.bio;
-      previewTags.innerHTML = (bot.tags || [])
-        .map(t => `<span class="tag-chip">${escapeHtml(t)}</span>`)
-        .join("");
-
+      document.getElementById("previewAvatar").src = bot.avatarUrl;
+      document.getElementById("previewName").textContent = bot.name;
+      document.getElementById("previewBio").textContent = bot.bio;
+      document.getElementById("previewTags").innerHTML = (bot.tags || []).map(t => `<span class="tag-chip">${escapeHtml(t)}</span>`).join("");
       previewModal.classList.add("open");
     }
 
-    closePreviewBtn.addEventListener("click", () => previewModal.classList.remove("open"));
-    previewModal.addEventListener("click", (e) => {
-      if (e.target === previewModal) previewModal.classList.remove("open");
-    });
+    document.getElementById("closePreviewBtn").addEventListener("click", () => previewModal.classList.remove("open"));
+    previewModal.addEventListener("click", (e) => { if (e.target === previewModal) previewModal.classList.remove("open"); });
 
-    startChatNowBtn.addEventListener("click", () => {
+    document.getElementById("startChatNowBtn").addEventListener("click", () => {
       if (!previewingBot) return;
       const bot = previewingBot;
       previewModal.classList.remove("open");
-
       updateBotChatMeta(bot.id, { started: true });
       const initialMsgs = getDefaultMessages(bot);
       localStorage.setItem(getStorageKey(bot), JSON.stringify(initialMsgs));
       syncBotDedicatedDB(bot, { bot, messages: initialMsgs });
-
       requestOpenBotChat(bot);
     });
 
@@ -2692,27 +2062,18 @@
 
     searchInput.addEventListener("input", renderBotsGrid);
 
-    // ==================== التنقل وإدارة الجلسة ====================
-    function getStorageKey(bot) {
-      return `yollo_chat_${bot.id}_v2`;
-    }
+    // ==================== التنقل وإدارة المحادثة المعزولة ====================
+    function getStorageKey(bot) { return `${userStoragePrefix()}chat_${bot.id}`; }
 
     function getDefaultMessages(bot) {
-      const list = [
-        {
-          role: "bot",
-          type: "text",
-          ltr: /[a-zA-Z]{10,}/.test(bot.greeting) && !/[\u0600-\u06FF]/.test(bot.greeting),
-          content: bot.greeting
-        }
-      ];
+      const list = [{
+        role: "bot",
+        type: "text",
+        ltr: /[a-zA-Z]{10,}/.test(bot.greeting) && !/[\u0600-\u06FF]/.test(bot.greeting),
+        content: bot.greeting
+      }];
       if (bot.sendWelcomeImage && bot.avatarUrl) {
-        list.push({
-          role: "bot",
-          type: "image",
-          imageUrl: bot.avatarUrl,
-          content: ""
-        });
+        list.push({ role: "bot", type: "image", imageUrl: bot.avatarUrl, content: "" });
       }
       return list;
     }
@@ -2754,18 +2115,11 @@
     }
 
     async function proceedOpenBotChat(bot) {
-      const meta = getBotChatMeta(bot.id);
-      if (meta.password && !isBotUnlockedThisSession(bot.id)) {
-        requestOpenBotChat(bot);
-        return;
-      }
-
       currentBot = bot;
       updateBotChatMeta(bot.id, { started: true });
 
       chatHeaderAvatar.src = bot.avatarUrl;
       chatHeaderAvatar.onerror = () => { chatHeaderAvatar.src = FALLBACK_AVATAR; };
-      chatHeaderAvatar.alt = bot.name;
       chatHeaderName.textContent = bot.name;
       ambientBg.style.backgroundImage = `url('${bot.avatarUrl}')`;
 
@@ -2774,144 +2128,54 @@
       lastUserPromptText = lastUser ? lastUser.content : "";
 
       renderAllMessages();
-
       homeView.classList.remove("active");
       chatView.classList.add("active");
 
       const remoteDb = await fetchBotDedicatedDB(bot);
-      if (remoteDb && currentBot && currentBot.id === bot.id) {
-        if (remoteDb.persona && Object.values(remoteDb.persona).some(Boolean)) {
-          const allP = getAllBotPersonas();
-          allP[String(bot.id)] = remoteDb.persona;
-          localStorage.setItem(STORAGE_KEY_BOT_PERSONAS, JSON.stringify(allP));
-        }
-        if (Array.isArray(remoteDb.messages) && remoteDb.messages.length >= messages.length) {
-          messages = remoteDb.messages;
-          localStorage.setItem(getStorageKey(bot), JSON.stringify(messages));
-          const lu = [...messages].reverse().find(m => m.role === "user");
-          lastUserPromptText = lu ? lu.content : "";
-          renderAllMessages();
-        }
+      if (remoteDb && currentBot && currentBot.id === bot.id && Array.isArray(remoteDb.messages) && remoteDb.messages.length >= messages.length) {
+        messages = remoteDb.messages;
+        localStorage.setItem(getStorageKey(bot), JSON.stringify(messages));
+        renderAllMessages();
       }
     }
 
-    backBtn.addEventListener("click", () => {
+    document.getElementById("backBtn").addEventListener("click", () => {
       chatView.classList.remove("active");
       homeView.classList.add("active");
       renderBotsGrid();
     });
 
-    // ==================== أدوات التنسيق السريع ====================
     formatToolbar.querySelectorAll(".fmt-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const wrap = btn.dataset.wrap;
         const openChar = wrap[0];
         const closeChar = wrap.length > 1 ? wrap[1] : wrap[0];
-
         const start = msgInput.selectionStart;
         const end = msgInput.selectionEnd;
         const val = msgInput.value;
         const selected = val.slice(start, end);
-
-        const replacement = `${openChar}${selected}${closeChar}`;
-        msgInput.value = val.slice(0, start) + replacement + val.slice(end);
+        msgInput.value = val.slice(0, start) + `${openChar}${selected}${closeChar}` + val.slice(end);
         msgInput.focus();
-
-        const cursorPos = selected ? start + replacement.length : start + 1;
-        msgInput.setSelectionRange(cursorPos, cursorPos);
+        msgInput.setSelectionRange(selected ? start + selected.length + 2 : start + 1, selected ? start + selected.length + 2 : start + 1);
       });
     });
 
-    // ==================== تنسيق وعرض الرسائل ====================
     function formatRoleplayText(rawText) {
       const tokenRegex = /(\*[^*]+\*|"[^"]+"|“[^”]+”|«[^»]+»)/g;
-      const parts = rawText.split(tokenRegex);
-
-      return parts.map(part => {
+      return rawText.split(tokenRegex).map(part => {
         if (!part) return "";
-        if (/^\*[^*]+\*$/.test(part)) {
-          return `<span class="rp-action">${escapeHtml(part)}</span>`;
-        }
-        if (/^("[^"]+"|“[^”]+”|«[^»]+»)$/.test(part)) {
-          return `<span class="rp-quote">${escapeHtml(part)}</span>`;
-        }
+        if (/^\*[^*]+\*$/.test(part)) return `<span class="rp-action">${escapeHtml(part)}</span>`;
+        if (/^("[^"]+"|“[^”]+”|«[^»]+»)$/.test(part)) return `<span class="rp-quote">${escapeHtml(part)}</span>`;
         return escapeHtml(part);
       }).join("");
     }
 
-    function generateSmartQuickReplies(lastBotText, allMessages = []) {
-      const userCount = allMessages.filter(m => m.role === "user").length;
-      if (!lastBotText || userCount === 0) {
-        return currentBot && currentBot.initialQuickReplies ? currentBot.initialQuickReplies : [
-          { label: "مرحبا", text: "مرحبا" },
-          { label: "*ينظر باهتمام*", text: "*ينظر إليها باهتمام*" }
-        ];
-      }
-
-      const sentTexts = new Set(
-        allMessages.filter(m => m.role === "user").map(m => m.content.trim())
-      );
-
-      const paragraphs = lastBotText.split(/\n+/).map(p => p.trim()).filter(Boolean);
-      const recentFocus = paragraphs.slice(-2).join(" ").toLowerCase();
-      const fullText = lastBotText.toLowerCase();
-
-      const pickTopic = (txt) => {
-        if (/أرض|نزرع|زراع|مزرع|شتا|نتفقد|محصول|حقل|إصلاح/.test(txt)) {
-          return [
-            { label: "يلا نتفقد الأرض معاً", text: "*يوافق برأسه* يلا نطلع نتفقد الأرض من ورا ونشوف شو نقدر نزرع قبل الشتا." },
-            { label: "شو نقدر نزرع هلا؟", text: "شو المحاصيل اللي تتحمل البرد ونقدر نزرعها قبل ما يجي الشتا؟" },
-            { label: "في أدوات زراعة هون؟", text: "عندك فكرة إذا في أدوات زراعة أو بذور مخزنة بالمزرعة؟" },
-            { label: "*يمشي باتجاه الباب الخلفي*", text: "*يتجه نحو الباب الخلفي للمنزل ليخرج إلى الأرض*" }
-          ];
-        }
-
-        if (/حليب|بقر|كعك|كيك|خبز|مطبخ|طعام|وصف|مكون|سر/.test(txt)) {
-          return [
-            { label: "ما رح أخبر حدا، وعد", text: "لا تقلقي، سرك بأمان معي وما رح أخبر حدا." },
-            { label: "يلا نروح نتفقد الأرض", text: "تمام، خلينا هلا نطلع نتفقد الأرض قبل ما يجي الشتا." },
-            { label: "*يضحك بخفة*", text: "*يضحك بخفة على تلعثمها* المهم إنه طعمه طيب فعلاً." },
-            { label: "شو الخطوة الجاية؟", text: "طيب، شو خطتنا الجاية بالمزرعة؟" }
-          ];
-        }
-
-        if (/\?|؟|إيش رأيك|شو رأيك|هل|ماذا|كيف/.test(txt)) {
-          return [
-            { label: "فكرة ممتازة، يلا", text: "فكرة ممتازة، يلا نبدأ فوراً." },
-            { label: "خلينا نخطط أول", text: "خلينا نخطط بهدوء قبل ما نبدأ." },
-            { label: "*ينظر إليها باهتمام*", text: "*ينظر إليها باهتمام* شو برأيك الأهم حالياً؟" },
-            { label: "كملي كلامك", text: "كملي، أنا عم بسمعك." }
-          ];
-        }
-
-        return null;
-      };
-
-      let candidates = pickTopic(recentFocus) || pickTopic(fullText) || [
-        { label: "استمري", text: "استمري." },
-        { label: "*يتفقد المكان حوله*", text: "*يتفقد المكان حوله بفضول*" },
-        { label: "شو لازم نعمل هلا؟", text: "شو برأيك لازم نعمل هلا؟" },
-        { label: "*يبتسم بهدوء*", text: "*يبتسم بهدوء*" }
-      ];
-
-      const filtered = candidates.filter(item => !sentTexts.has(item.text.trim()));
-      return filtered.length > 0 ? filtered : [
-        { label: "كملي القصة", text: "كملي، شو صار بعدين؟" },
-        { label: "*يأخذ نفساً عميقاً*", text: "*يأخذ نفساً عميقاً وينظر للأفق*" },
-        { label: "خلينا نتحرك", text: "يلا نتحرك ونشوف الوضع." }
-      ];
-    }
-
     function renderQuickBar() {
-      const lastBotTextMsg = [...messages]
-        .reverse()
-        .find(m => m.role === "bot" && m.type !== "image" && m.content);
-
-      const suggestions = generateSmartQuickReplies(
-        lastBotTextMsg ? lastBotTextMsg.content : "",
-        messages
-      );
-
+      const suggestions = currentBot?.initialQuickReplies || [
+        { label: "مرحبا", text: "مرحبا" },
+        { label: "*ينظر باهتمام*", text: "*ينظر إليها باهتمام*" },
+        { label: "كملي كلامك", text: "كملي، أنا عم بسمعك." }
+      ];
       quickBar.innerHTML = "";
       suggestions.forEach(item => {
         const btn = document.createElement("button");
@@ -2925,25 +2189,8 @@
     function setTypingState(active) {
       isSending = active;
       sendBtn.disabled = active;
-      if (active) {
-        statusDot.classList.add("typing");
-        statusText.textContent = "يكتب الآن...";
-      } else {
-        statusDot.classList.remove("typing");
-        statusText.textContent = "متصل • جاهز";
-      }
-    }
-
-    function renderCharacterIntro() {
-      if (!currentBot) return;
-      const intro = document.createElement("div");
-      intro.className = "character-intro";
-      intro.innerHTML = `
-        <img class="intro-avatar" src="${currentBot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" alt="${escapeHtml(currentBot.name)}" />
-        <div class="intro-name">${escapeHtml(currentBot.name)}</div>
-        <div class="intro-bio">${escapeHtml(currentBot.bio)}</div>
-      `;
-      chatContainer.appendChild(intro);
+      statusDot.classList.toggle("typing", active);
+      statusText.textContent = active ? "يكتب الآن..." : "متصل • جاهز";
     }
 
     function renderMessage(msg, index, shouldScroll = true) {
@@ -2955,13 +2202,11 @@
         avatar.className = "msg-avatar";
         avatar.src = currentBot.avatarUrl;
         avatar.onerror = () => { avatar.src = FALLBACK_AVATAR; };
-        avatar.alt = currentBot.name;
         row.appendChild(avatar);
       }
 
       const contentWrap = document.createElement("div");
       contentWrap.className = "msg-content-wrap";
-
       const bubble = document.createElement("div");
       bubble.className = "bubble";
 
@@ -2970,8 +2215,6 @@
         const img = document.createElement("img");
         img.className = "chat-sent-img";
         img.src = msg.imageUrl;
-        img.onerror = () => { img.src = FALLBACK_AVATAR; };
-        img.alt = currentBot ? currentBot.name : "";
         bubble.appendChild(img);
       } else if (msg.role === "bot") {
         if (msg.ltr) bubble.classList.add("ltr-msg");
@@ -2983,7 +2226,6 @@
       contentWrap.appendChild(bubble);
 
       const isLastBotMsg = msg.role === "bot" && index === messages.length - 1 && msg.type !== "image";
-
       if (msg.type !== "image" && msg.content && msg.role !== "error" && (index >= 1 || isLastBotMsg)) {
         const tools = document.createElement("div");
         tools.className = "msg-tools";
@@ -2991,17 +2233,9 @@
         if (isLastBotMsg) {
           const contBtn = document.createElement("button");
           contBtn.className = "mini-tool-btn accent-tool";
-          contBtn.textContent = "▶️ استمرار بالمحادثة";
-          contBtn.onclick = () => continueConversation();
+          contBtn.textContent = "▶️ استمرار";
+          contBtn.onclick = () => fetchBotReply("", true);
           tools.appendChild(contBtn);
-
-          if (index >= 1 && lastUserPromptText) {
-            const regenBtn = document.createElement("button");
-            regenBtn.className = "mini-tool-btn accent-tool";
-            regenBtn.textContent = "🔄 إعادة توليد";
-            regenBtn.onclick = () => regenerateLastReply();
-            tools.appendChild(regenBtn);
-          }
         }
 
         if (index >= 1) {
@@ -3009,11 +2243,9 @@
           copyBtn.className = "mini-tool-btn";
           copyBtn.textContent = "نسخ";
           copyBtn.onclick = async () => {
-            try {
-              await navigator.clipboard.writeText(msg.content);
-              copyBtn.textContent = "تم ✓";
-              setTimeout(() => { copyBtn.textContent = "نسخ"; }, 1200);
-            } catch {}
+            await navigator.clipboard.writeText(msg.content);
+            copyBtn.textContent = "تم ✓";
+            setTimeout(() => copyBtn.textContent = "نسخ", 1200);
           };
 
           const delBtn = document.createElement("button");
@@ -3021,60 +2253,37 @@
           delBtn.textContent = "حذف";
           delBtn.onclick = async () => {
             const targetMsg = messages[index];
-            delBtn.textContent = "جاري الحذف...";
-            delBtn.disabled = true;
-
-            if (targetMsg && targetMsg.serverId) {
-              await deleteRemoteMessage(targetMsg.serverId, currentBot);
-            }
-
+            if (targetMsg?.serverId) await deleteRemoteMessage(targetMsg.serverId, currentBot);
             messages.splice(index, 1);
             saveMessages();
             renderAllMessages();
           };
-
           tools.appendChild(copyBtn);
           tools.appendChild(delBtn);
         }
-
         contentWrap.appendChild(tools);
       }
 
       row.appendChild(contentWrap);
       chatContainer.appendChild(row);
-
-      if (shouldScroll) {
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-      }
+      if (shouldScroll) chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
     function renderAllMessages() {
       chatContainer.innerHTML = "";
-      renderCharacterIntro();
+      if (currentBot) {
+        const intro = document.createElement("div");
+        intro.className = "character-intro";
+        intro.innerHTML = `
+          <img class="intro-avatar" src="${currentBot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" />
+          <div class="intro-name">${escapeHtml(currentBot.name)}</div>
+          <div class="intro-bio">${escapeHtml(currentBot.bio)}</div>
+        `;
+        chatContainer.appendChild(intro);
+      }
       messages.forEach((m, idx) => renderMessage(m, idx, false));
       chatContainer.scrollTop = chatContainer.scrollHeight;
       renderQuickBar();
-    }
-
-    function showTypingBubble() {
-      const row = document.createElement("div");
-      row.className = "msg-row bot";
-      row.id = "typingIndicator";
-      row.innerHTML = `
-        <img class="msg-avatar" src="${currentBot ? currentBot.avatarUrl : FALLBACK_AVATAR}" alt="" />
-        <div class="msg-content-wrap">
-          <div class="bubble">
-            <div class="typing-dots"><span></span><span></span><span></span></div>
-          </div>
-        </div>
-      `;
-      chatContainer.appendChild(row);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
-    function removeTypingBubble() {
-      const el = document.getElementById("typingIndicator");
-      if (el) el.remove();
     }
 
     function buildPayloadMessage(rawUserText) {
@@ -3082,33 +2291,12 @@
       const p = getBotPersona(currentBot.id);
       const parts = [
         p.name ? `اسمي: ${p.name}` : "",
-        p.title ? `لقبي/صفتي: ${p.title}` : "",
-        p.appearance ? `مظهري/عمري: ${p.appearance}` : "",
-        p.tone ? `أسلوب تعاملي: ${p.tone}` : "",
+        p.title ? `لقبي: ${p.title}` : "",
+        p.appearance ? `مظهري: ${p.appearance}` : "",
+        p.tone ? `أسلوبي: ${p.tone}` : "",
         p.bio ? `خلفيتي: ${p.bio}` : ""
       ].filter(Boolean);
-
-      if (parts.length === 0) return rawUserText;
-      return `[هوية المستخدم في القصة: ${parts.join(" | ")}]\n${rawUserText}`;
-    }
-
-    async function regenerateLastReply() {
-      if (isSending || !lastUserPromptText || !currentBot) return;
-      if (messages.length > 0 && messages[messages.length - 1].role === "bot") {
-        const removedBotMsg = messages.pop();
-        saveMessages();
-        renderAllMessages();
-        if (removedBotMsg && removedBotMsg.serverId) {
-          await deleteRemoteMessage(removedBotMsg.serverId, currentBot);
-        }
-      }
-      await fetchBotReply(lastUserPromptText, false);
-    }
-
-    async function continueConversation() {
-      if (isSending || !currentBot) return;
-      playUiPop(520);
-      await fetchBotReply("", true);
+      return parts.length ? `[هوية المستخدم في القصة: ${parts.join(" | ")}]\n${rawUserText}` : rawUserText;
     }
 
     async function sendMessage(customText) {
@@ -3117,8 +2305,7 @@
 
       playUiPop(580);
       lastUserPromptText = text;
-      const userMsg = { role: "user", type: "text", content: text, serverId: null };
-      messages.push(userMsg);
+      messages.push({ role: "user", type: "text", content: text, serverId: null });
       saveMessages();
       renderAllMessages();
 
@@ -3129,26 +2316,26 @@
 
     async function fetchBotReply(userText, isContinue = false) {
       setTypingState(true);
-      showTypingBubble();
+      const typingRow = document.createElement("div");
+      typingRow.className = "msg-row bot";
+      typingRow.id = "typingIndicator";
+      typingRow.innerHTML = `<img class="msg-avatar" src="${currentBot.avatarUrl}" /><div class="msg-content-wrap"><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+      chatContainer.appendChild(typingRow);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
 
       try {
-        const endpoint = `${API_BASE_URL.replace(/\/+$/, "")}/api/chat`;
         const formattedHistory = messages
           .filter(m => m.type !== "image" && m.content && m.role !== "error")
-          .map(m => ({
-            role: m.role === "bot" ? "assistant" : "user",
-            content: m.role === "user" ? buildPayloadMessage(m.content) : m.content
-          }));
+          .map(m => ({ role: m.role === "bot" ? "assistant" : "user", content: m.role === "user" ? buildPayloadMessage(m.content) : m.content }));
 
-        const response = await fetch(endpoint, {
+        const response = await fetch(`${API_BASE_URL}/api/chat`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: getAuthHeaders(),
           body: JSON.stringify({
             message: isContinue ? "" : buildPayloadMessage(userText),
             rawUserMessage: isContinue ? "" : userText,
-            botId: currentBot.botId || 148005,
+            botId: currentBot.botId,
             botKey: currentBot.id,
-            sessionId: currentBot.sessionId || 21702378,
             greeting: currentBot.greeting || "",
             isContinue: Boolean(isContinue),
             conversationHistory: formattedHistory
@@ -3156,76 +2343,51 @@
         });
 
         const data = await response.json();
-        removeTypingBubble();
+        document.getElementById("typingIndicator")?.remove();
 
         if (!response.ok || !data.ok) {
-          const errText = data.reply || data.error || "حدث خطأ أثناء الاتصال بالنموذج";
-          renderMessage({ role: "error", type: "text", content: errText }, -1);
+          renderMessage({ role: "error", type: "text", content: data.error || "حدث خطأ أثناء الاتصال" }, -1);
         } else {
           playUiPop(440);
-
           if (!isContinue && data.userMsgId) {
             for (let i = messages.length - 1; i >= 0; i--) {
-              if (messages[i].role === "user") {
-                messages[i].serverId = String(data.userMsgId);
-                break;
-              }
+              if (messages[i].role === "user") { messages[i].serverId = String(data.userMsgId); break; }
             }
           }
-
-          const botMsg = {
-            role: "bot",
-            type: "text",
-            content: data.reply,
-            serverId: data.botMsgId ? String(data.botMsgId) : null
-          };
-          messages.push(botMsg);
+          messages.push({ role: "bot", type: "text", content: data.reply, serverId: data.botMsgId ? String(data.botMsgId) : null });
           saveMessages();
           renderAllMessages();
         }
-      } catch (err) {
-        removeTypingBubble();
-        renderMessage({
-          role: "error",
-          type: "text",
-          content: "تعذر الوصول إلى السيرفر. تأكد من أن خادم Render نشط."
-        }, -1);
+      } catch {
+        document.getElementById("typingIndicator")?.remove();
+        renderMessage({ role: "error", type: "text", content: "تعذر الوصول إلى السيرفر." }, -1);
       } finally {
         setTypingState(false);
       }
     }
 
-    msgInput.addEventListener("input", () => {
-      msgInput.style.height = "42px";
-      msgInput.style.height = Math.min(msgInput.scrollHeight, 105) + "px";
-    });
-
-    msgInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-
+    msgInput.addEventListener("input", () => { msgInput.style.height = "42px"; msgInput.style.height = Math.min(msgInput.scrollHeight, 105) + "px"; });
+    msgInput.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
     sendBtn.addEventListener("click", () => sendMessage());
 
-    clearBtn.addEventListener("click", async () => {
+    document.getElementById("clearBtn").addEventListener("click", async () => {
       if (!currentBot) return;
-      if (confirm("هل تريد مسح محتوى المحادثة نهائياً من السيرفر والبدء من جديد؟")) {
-        statusText.textContent = "جاري مسح السجل...";
-        await clearRemoteSession(messages, currentBot);
-
+      if (confirm("هل تريد مسح محتوى المحادثة؟")) {
+        await clearRemoteSession(currentBot);
         messages = getDefaultMessages(currentBot);
-        lastUserPromptText = "";
         saveMessages();
         renderAllMessages();
-        statusText.textContent = "متصل • جاهز";
       }
     });
 
+    // بدء التشغيل التلقائي حسب حالة تسجيل الدخول
     applyPreferences();
-    renderBotsGrid();
-    loadServerBots();
+    if (currentUser && currentUser.uid && currentUser.xid && currentUser.profileCompleted) {
+      finalizeUserLogin(currentUser);
+    } else {
+      authView.classList.add("active");
+      homeView.classList.remove("active");
+    }
   </script>
 </body>
 </html>
