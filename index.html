@@ -107,7 +107,6 @@
       box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 42%, transparent);
     }
 
-    /* شريط حالة الجهاز وعدد الحسابات */
     .device-limit-banner {
       display: flex;
       align-items: center;
@@ -729,32 +728,16 @@
       transition: background 0.85s ease, box-shadow 0.85s ease;
     }
 
-    #chatView.atmo-tension .atmosphere-overlay {
-      animation: tensionPulse 2.4s ease-in-out infinite;
-    }
-
-    #chatView.atmo-romantic .atmosphere-overlay {
-      animation: romanticBreathe 4s ease-in-out infinite;
-    }
-
-    #chatView.atmo-shock .atmosphere-overlay {
-      animation: shockFlash 0.65s ease-out;
-    }
+    #chatView.atmo-tension .atmosphere-overlay { animation: tensionPulse 2.4s ease-in-out infinite; }
+    #chatView.atmo-romantic .atmosphere-overlay { animation: romanticBreathe 4s ease-in-out infinite; }
+    #chatView.atmo-shock .atmosphere-overlay { animation: shockFlash 0.65s ease-out; }
 
     @keyframes tensionPulse {
       0%, 100% { box-shadow: inset 0 0 55px rgba(239, 68, 68, 0.16); }
       50% { box-shadow: inset 0 0 95px rgba(239, 68, 68, 0.34); }
     }
-
-    @keyframes romanticBreathe {
-      0%, 100% { opacity: 0.75; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes shockFlash {
-      0% { background-color: rgba(245, 158, 11, 0.32); }
-      100% { background-color: transparent; }
-    }
+    @keyframes romanticBreathe { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+    @keyframes shockFlash { 0% { background-color: rgba(245, 158, 11, 0.32); } 100% { background-color: transparent; } }
 
     header.chat-header {
       background-color: var(--bg-header);
@@ -851,7 +834,6 @@
     .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
     .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
 
-    /* شريط توجيه السيناريو السريع (Director Prompts) */
     .director-bar {
       display: none;
       gap: 6px;
@@ -993,7 +975,6 @@
         <p style="font-size:12px; color:var(--text-action);">حسابك ومحادثاتك وذكرياتك معزولة بالكامل</p>
       </div>
 
-      <!-- مؤشر حصة الجهاز (حسابان كحد أقصى) -->
       <div class="device-limit-banner" id="deviceLimitBanner">
         <span id="deviceLimitText">🛡️ جاري التحقق من الجهاز...</span>
         <div class="device-slots-dots">
@@ -1010,7 +991,6 @@
 
       <div class="auth-error" id="authErrorBox"></div>
 
-      <!-- نموذج تسجيل الدخول -->
       <form id="loginForm" style="display:flex; flex-direction:column; gap:12px;">
         <div class="auth-field">
           <label>البريد الإلكتروني أو اسم المستخدم</label>
@@ -1023,7 +1003,6 @@
         <button type="submit" class="primary-cta" id="loginSubmitBtn">دخول إلى المنصة</button>
       </form>
 
-      <!-- نموذج إنشاء حساب جديد -->
       <form id="signupForm" style="display:none; flex-direction:column; gap:12px;">
         <div class="auth-field">
           <label>الاسم الظاهر</label>
@@ -1041,7 +1020,6 @@
       </form>
     </div>
 
-    <!-- المرحلة 2: تأكيد رمز التحقق المرسل إلى Gmail -->
     <div class="auth-card" id="authOtpStep" style="display:none;">
       <div class="auth-logo-wrap">
         <h2 style="font-size:17px; color:#fff;">📩 تأكيد البريد الإلكتروني</h2>
@@ -1059,7 +1037,6 @@
       <button type="button" class="secondary-cta" id="backToSignupBtn" style="border:none; background:transparent;">تغيير البريد الإلكتروني</button>
     </div>
 
-    <!-- المرحلة 3: إعداد اسم المستخدم الفريد وصورة البروفايل -->
     <div class="auth-card" id="authProfileStep" style="display:none;">
       <div class="auth-logo-wrap">
         <h2 style="font-size:17px; color:#fff;">🎭 إكمال إعداد البروفايل</h2>
@@ -1085,13 +1062,13 @@
     </div>
   </section>
 
-  <!-- ==================== القائمة الجانبية (ترتيب هرمي نظيف) ==================== -->
+  <!-- ==================== القائمة الجانبية ==================== -->
   <div class="drawer-backdrop" id="drawerBackdrop"></div>
   <aside class="sidebar-drawer" id="sidebarDrawer">
     <div class="drawer-identity-card">
       <div class="drawer-identity-top">
         <div class="user-profile-pill" id="openAccountSettingsFromPill" title="إعدادات الحساب">
-          <img id="drawerUserAvatar" src="https://d.top4top.io/p_39776f6w21.jpg" alt="User" />
+          <img id="drawerUserAvatar" src="https://api.dicebear.com/7.x/initials/svg?seed=User" alt="User" />
           <div class="user-profile-info">
             <h3 id="drawerUserName">مستخدم</h3>
             <span id="drawerUserMeta">@user • ID: ---</span>
@@ -1221,7 +1198,6 @@
 
     <main id="chatContainer"></main>
 
-    <!-- شريط توجيه السيناريو السريع (Director Prompts) -->
     <div class="director-bar" id="directorBar">
       <button type="button" class="director-chip" data-director="event">⚡ حدث مفاجئ</button>
       <button type="button" class="director-chip" data-director="timeskip">⏩ تسريع الزمن</button>
@@ -1243,7 +1219,7 @@
     </div>
   </section>
 
-  <!-- ==================== نافذة ذاكرة المشهد الثابتة (Scene Memory) ==================== -->
+  <!-- ==================== نافذة ذاكرة المشهد الثابتة ==================== -->
   <div class="modal-backdrop" id="sceneMemoryModal">
     <div class="modal">
       <h2 id="sceneMemoryModalTitle">🧠 ذاكرة المشهد الثابتة</h2>
@@ -1260,7 +1236,7 @@
     </div>
   </div>
 
-  <!-- ==================== نافذة إعدادات الحساب (بدون إظهار أي كود تقني) ==================== -->
+  <!-- ==================== نافذة إعدادات الحساب ==================== -->
   <div class="modal-backdrop" id="accountSettingsModal">
     <div class="modal">
       <h2>👤 إعدادات الحساب والهوية</h2>
@@ -1367,7 +1343,7 @@
     </div>
   </div>
 
-  <!-- ==================== نافذة هويتك في القصة (Persona لكل شخصية) ==================== -->
+  <!-- ==================== نافذة هويتك في القصة ==================== -->
   <div class="modal-backdrop" id="personaModal">
     <div class="modal">
       <h2 id="personaModalTitle">🎭 هويتك في القصة</h2>
@@ -1423,7 +1399,7 @@
     </div>
   </div>
 
-  <!-- ==================== نافذة الإعدادات والتخصيص مع المعاينة الحية ==================== -->
+  <!-- ==================== نافذة الإعدادات والتخصيص ==================== -->
   <div class="modal-backdrop" id="settingsModal">
     <div class="modal">
       <h2>⚙️ تخصيص الواجهة والدردشة</h2>
@@ -1495,14 +1471,11 @@
 
   <script>
     const API_BASE_URL = "https://hin-18-1.onrender.com";
-    const FALLBACK_AVATAR = "https://d.top4top.io/p_39776f6w21.jpg";
     const MAX_ACCOUNTS_PER_DEVICE = 2;
 
     const STORAGE_KEY_USER_SESSION = "yollo_isolated_user_session_v1";
     const STORAGE_KEY_PREFS = "yollo_ui_preferences_v2";
     const STORAGE_KEY_SERVER_BOTS_CACHE = "yollo_server_bots_cache_v1";
-    const STORAGE_KEY_DEVICE_FP = "yollo_device_fingerprint_v1";
-    const STORAGE_KEY_DEVICE_ACCOUNTS = "yollo_device_registered_accounts_v1";
 
     let currentUser = null;
     let pendingAuthState = null;
@@ -1516,7 +1489,55 @@
       serverBots = JSON.parse(localStorage.getItem(STORAGE_KEY_SERVER_BOTS_CACHE) || "[]");
     } catch {}
 
-    // ==================== 1. نظام بصمة الجهاز المدمجة (صامت في الخلفية) ====================
+    // ==================== 1. دالة استخراج صورة فريدة لكل بوت (إصلاح مشكلة توحد الصور) ====================
+    function getUniqueFallbackAvatar(botOrName) {
+      const seedName = typeof botOrName === "string"
+        ? botOrName
+        : (botOrName?.name || botOrName?.id || "Character");
+      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seedName)}`;
+    }
+
+    function resolveBotAvatar(bot) {
+      if (!bot) return getUniqueFallbackAvatar("Bot");
+      const rawUrl = String(
+        bot.avatarUrl || bot.avatar || bot.imageUrl || bot.image || bot.cover || ""
+      ).trim();
+
+      if (/^https?:\/\//i.test(rawUrl) || /^data:image\//i.test(rawUrl)) {
+        return rawUrl;
+      }
+      if (rawUrl.startsWith("//")) {
+        return `https:${rawUrl}`;
+      }
+      return getUniqueFallbackAvatar(bot);
+    }
+
+    // ==================== 2. تشفير كلمة سر القفل (SHA-256) ====================
+    async function hashLockPassword(plainPass) {
+      const clean = String(plainPass || "").trim();
+      if (!clean) return "";
+      try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(`yollo_lock_salt_2026:${clean}`);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        return "sha256:" + Array.from(new Uint8Array(hashBuffer))
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("");
+      } catch {
+        return `fnv:${fnv1aHash(clean)}`;
+      }
+    }
+
+    async function verifyLockPassword(inputPass, storedPassword) {
+      if (!storedPassword) return true;
+      if (storedPassword.startsWith("sha256:") || storedPassword.startsWith("fnv:")) {
+        const hashedInput = await hashLockPassword(inputPass);
+        return hashedInput === storedPassword;
+      }
+      return String(inputPass).trim() === String(storedPassword).trim();
+    }
+
+    // ==================== 3. نظام بصمة الجهاز المقاوم للمسح ====================
     function computeCanvasSignal() {
       try {
         const canvas = document.createElement("canvas");
@@ -1557,42 +1578,20 @@
       ].join("|");
       const canvasSig = computeCanvasSignal();
       const rawSignature = `${tz}::${screenSig}::${navSig}::${canvasSig}`;
-      const fp = `fp_${fnv1aHash(rawSignature)}_${fnv1aHash(rawSignature.split("").reverse().join(""))}`;
-      localStorage.setItem(STORAGE_KEY_DEVICE_FP, fp);
-      return fp;
+      return `fp_${fnv1aHash(rawSignature)}_${fnv1aHash(rawSignature.split("").reverse().join(""))}`;
     }
 
     deviceFingerprint = generateDeviceFingerprint();
 
-    function getLocalDeviceAccountsList() {
-      try {
-        const list = JSON.parse(localStorage.getItem(STORAGE_KEY_DEVICE_ACCOUNTS) || "[]");
-        return Array.isArray(list) ? list : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function recordLocalDeviceAccount(email) {
-      if (!email) return;
-      const clean = email.trim().toLowerCase();
-      const list = getLocalDeviceAccountsList();
-      if (!list.includes(clean)) {
-        list.push(clean);
-        localStorage.setItem(STORAGE_KEY_DEVICE_ACCOUNTS, JSON.stringify(list));
-      }
-    }
-
     async function refreshDeviceQuotaStatus() {
-      const localCount = getLocalDeviceAccountsList().length;
-      let serverCount = localCount;
+      let serverCount = 0;
       try {
         const res = await fetch(`${API_BASE_URL}/api/auth/device-status?fp=${encodeURIComponent(deviceFingerprint)}`, {
           headers: { "x-device-fingerprint": deviceFingerprint }
         });
         const data = await res.json();
         if (res.ok && data.ok && typeof data.count === "number") {
-          serverCount = Math.max(serverCount, data.count);
+          serverCount = data.count;
         }
       } catch {}
 
@@ -1765,57 +1764,15 @@
     let lastUserPromptText = "";
     let pendingEditedAccountAvatar = "";
 
-    // ==================== 2. محرك الإضاءات والأجواء التفاعلية الحية ====================
+    // ==================== 4. محرك الإضاءات والأجواء التفاعلية الحية ====================
     const ATMOSPHERE_THEMES = {
-      tension: {
-        label: "⚡ توتر وخطر",
-        color: "rgba(239, 68, 68, 0.24)",
-        glow: "rgba(239, 68, 68, 0.28)",
-        cls: "atmo-tension",
-        freq: 210
-      },
-      romantic: {
-        label: "💖 دفء ورومانسية",
-        color: "rgba(236, 72, 153, 0.22)",
-        glow: "rgba(236, 72, 153, 0.26)",
-        cls: "atmo-romantic",
-        freq: 640
-      },
-      mystery: {
-        label: "🌙 غموض وهمس",
-        color: "rgba(139, 92, 246, 0.22)",
-        glow: "rgba(139, 92, 246, 0.25)",
-        cls: "atmo-mystery",
-        freq: 360
-      },
-      melancholy: {
-        label: "🌧️ حزن وهدوء",
-        color: "rgba(56, 189, 248, 0.20)",
-        glow: "rgba(56, 189, 248, 0.22)",
-        cls: "atmo-melancholy",
-        freq: 310
-      },
-      shock: {
-        label: "🔥 ذروة ومفاجأة",
-        color: "rgba(245, 158, 11, 0.24)",
-        glow: "rgba(245, 158, 11, 0.28)",
-        cls: "atmo-shock",
-        freq: 760
-      },
-      dark: {
-        label: "🖤 ظلام وتهديد",
-        color: "rgba(127, 29, 29, 0.28)",
-        glow: "rgba(185, 28, 28, 0.26)",
-        cls: "atmo-tension",
-        freq: 175
-      },
-      calm: {
-        label: "🌿 هادئ",
-        color: "rgba(16, 185, 129, 0.14)",
-        glow: "rgba(99, 102, 241, 0.20)",
-        cls: "atmo-calm",
-        freq: 480
-      }
+      tension: { label: "⚡ توتر وخطر", color: "rgba(239, 68, 68, 0.24)", glow: "rgba(239, 68, 68, 0.28)", cls: "atmo-tension", freq: 210 },
+      romantic: { label: "💖 دفء ورومانسية", color: "rgba(236, 72, 153, 0.22)", glow: "rgba(236, 72, 153, 0.26)", cls: "atmo-romantic", freq: 640 },
+      mystery: { label: "🌙 غموض وهمس", color: "rgba(139, 92, 246, 0.22)", glow: "rgba(139, 92, 246, 0.25)", cls: "atmo-mystery", freq: 360 },
+      melancholy: { label: "🌧️ حزن وهدوء", color: "rgba(56, 189, 248, 0.20)", glow: "rgba(56, 189, 248, 0.22)", cls: "atmo-melancholy", freq: 310 },
+      shock: { label: "🔥 ذروة ومفاجأة", color: "rgba(245, 158, 11, 0.24)", glow: "rgba(245, 158, 11, 0.28)", cls: "atmo-shock", freq: 760 },
+      dark: { label: "🖤 ظلام وتهديد", color: "rgba(127, 29, 29, 0.28)", glow: "rgba(185, 28, 28, 0.26)", cls: "atmo-tension", freq: 175 },
+      calm: { label: "🌿 هادئ", color: "rgba(16, 185, 129, 0.14)", glow: "rgba(99, 102, 241, 0.20)", cls: "atmo-calm", freq: 480 }
     };
 
     function detectTextAtmosphere(text) {
@@ -1827,24 +1784,12 @@
       }
 
       const t = text.toLowerCase();
-      if (/(غضب|يصرخ|تصرخ|سلاح|سكين|دم|هجوم|خطر|يهرب|تهرب|قتل|ضرب|ارتجف|خوف|رعب|angry|scream|blood|knife|gun|danger|attack|fear|panic|trembl)/.test(t)) {
-        return "tension";
-      }
-      if (/(يهمس|تهمس|سر|ظلام|غموض|غريب|يختفي|تختفي|مجهول|قناع|whisper|secret|shadow|mystery|darkness|hidden|stranger)/.test(t)) {
-        return "mystery";
-      }
-      if (/(يبتسم|تبتسم|حب|أحبك|قلبي|يعانق|تعانق|خجل|احمر|قبلة|دافئ|حنان|blush|love|kiss|hug|heart|smile|warm|gentle|darling)/.test(t)) {
-        return "romantic";
-      }
-      if (/(دموع|يبكي|تبكي|حزن|مطر|وحدة|ألم|وداع|تنهيدة|cry|tears|sad|rain|alone|pain|sigh|sorrow)/.test(t)) {
-        return "melancholy";
-      }
-      if (/(صدمة|مفاجأة|فجأة|انفجار|شهق|اتسعت عينا|shock|suddenly|gasp|surprise|wide eyes|what\?!)/.test(t)) {
-        return "shock";
-      }
-      if (/(تهديد|شر|انتقام|ظل|لعنة|شيطان|threat|revenge|curse|evil|sinister)/.test(t)) {
-        return "dark";
-      }
+      if (/(غضب|يصرخ|تصرخ|سلاح|سكين|دم|هجوم|خطر|يهرب|تهرب|قتل|ضرب|ارتجف|خوف|رعب|angry|scream|blood|knife|gun|danger|attack|fear|panic|trembl)/.test(t)) return "tension";
+      if (/(يهمس|تهمس|سر|ظلام|غموض|غريب|يختفي|تختفي|مجهول|قناع|whisper|secret|shadow|mystery|darkness|hidden|stranger)/.test(t)) return "mystery";
+      if (/(يبتسم|تبتسم|حب|أحبك|قلبي|يعانق|تعانق|خجل|احمر|قبلة|دافئ|حنان|blush|love|kiss|hug|heart|smile|warm|gentle|darling)/.test(t)) return "romantic";
+      if (/(دموع|يبكي|تبكي|حزن|مطر|وحدة|ألم|وداع|تنهيدة|cry|tears|sad|rain|alone|pain|sigh|sorrow)/.test(t)) return "melancholy";
+      if (/(صدمة|مفاجأة|فجأة|انفجار|شهق|اتسعت عينا|shock|suddenly|gasp|surprise|wide eyes|what\?!)/.test(t)) return "shock";
+      if (/(تهديد|شر|انتقام|ظل|لعنة|شيطان|threat|revenge|curse|evil|sinister)/.test(t)) return "dark";
       return "calm";
     }
 
@@ -1855,7 +1800,6 @@
     function applyAtmosphere(moodKey, playSound = false) {
       const theme = ATMOSPHERE_THEMES[moodKey] || ATMOSPHERE_THEMES.calm;
       moodIndicatorBadge.textContent = theme.label;
-
       chatView.classList.remove("atmo-tension", "atmo-romantic", "atmo-mystery", "atmo-melancholy", "atmo-shock", "atmo-calm");
 
       if (!prefs.liveAtmosphere) {
@@ -1868,10 +1812,7 @@
       document.documentElement.style.setProperty("--atmo-glow", theme.glow);
       void chatView.offsetWidth;
       chatView.classList.add(theme.cls);
-
-      if (playSound) {
-        playUiPop(theme.freq);
-      }
+      if (playSound) playUiPop(theme.freq);
     }
 
     // ==================== منطق نظام المصادقة وفحص بصمة الجهاز ====================
@@ -1923,11 +1864,9 @@
         const data = await res.json();
         if (!res.ok || !data.ok) throw new Error(data.error || "فشل تسجيل الدخول");
 
-        if (data.user?.email) recordLocalDeviceAccount(data.user.email);
-
         if (data.step === "profile_setup") {
           pendingAuthState = { pendingToken: data.pendingToken, email: data.user.email, name: data.user.name };
-          profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(data.user.name)}`;
+          profileAvatarPreview.src = getUniqueFallbackAvatar(data.user.name);
           authCredentialsStep.style.display = "none";
           authProfileStep.style.display = "flex";
         } else {
@@ -1950,11 +1889,6 @@
 
       if (!email.endsWith("@gmail.com")) {
         return showAuthError(authErrorBox, "يُقبل البريد الإلكتروني المنتهي بـ @gmail.com فقط.");
-      }
-
-      const localAccounts = getLocalDeviceAccountsList();
-      if (localAccounts.length >= MAX_ACCOUNTS_PER_DEVICE && !localAccounts.includes(email)) {
-        return showAuthError(authErrorBox, "تم رفض الطلب: الحد الأقصى المسموح به لهذا الجهاز هو حسابان فقط.");
       }
 
       const btn = document.getElementById("signupSubmitBtn");
@@ -2023,7 +1957,7 @@
         if (!res.ok || !data.ok) throw new Error(data.error || "رمز التحقق غير صحيح");
 
         pendingAuthState.pendingToken = data.pendingToken;
-        profileAvatarPreview.src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(pendingAuthState.name)}`;
+        profileAvatarPreview.src = getUniqueFallbackAvatar(pendingAuthState.name);
         authOtpStep.style.display = "none";
         authProfileStep.style.display = "flex";
       } catch (err) {
@@ -2093,7 +2027,6 @@
         const data = await res.json();
         if (!res.ok || !data.ok) throw new Error(data.error || "فشل حفظ البروفايل");
 
-        if (data.user?.email) recordLocalDeviceAccount(data.user.email);
         finalizeUserLogin(data.user);
       } catch (err) {
         showAuthError(profileErrorBox, err.message);
@@ -2105,7 +2038,6 @@
 
     async function finalizeUserLogin(userObj) {
       currentUser = userObj;
-      if (userObj?.email) recordLocalDeviceAccount(userObj.email);
       localStorage.setItem(STORAGE_KEY_USER_SESSION, JSON.stringify(userObj));
       updateUserHeaderUI();
       await refreshDeviceQuotaStatus();
@@ -2121,7 +2053,7 @@
 
     function updateUserHeaderUI() {
       if (!currentUser) return;
-      drawerUserAvatar.src = currentUser.avatarUrl || FALLBACK_AVATAR;
+      drawerUserAvatar.src = currentUser.avatarUrl || getUniqueFallbackAvatar(currentUser.name);
       drawerUserName.textContent = currentUser.name;
       drawerUserMeta.textContent = `@${currentUser.username} • ID: ${currentUser.id}`;
     }
@@ -2151,7 +2083,7 @@
       closeDrawer();
       await refreshDeviceQuotaStatus();
 
-      document.getElementById("accModalAvatar").src = currentUser.avatarUrl || FALLBACK_AVATAR;
+      document.getElementById("accModalAvatar").src = currentUser.avatarUrl || getUniqueFallbackAvatar(currentUser.name);
       document.getElementById("accModalName").textContent = currentUser.name;
       document.getElementById("accModalHandle").textContent = `@${currentUser.username} • ID: ${currentUser.id}`;
       document.getElementById("accModalEmail").textContent = currentUser.email || "";
@@ -2197,20 +2129,13 @@
       accountSettingsModal.classList.remove("open");
     });
 
-    // ==================== ذاكرة المشهد الثابتة (Scene Memory) ====================
-    function getSceneMemoryKey(botId) {
-      return `${userStoragePrefix()}scene_mem_${botId}`;
-    }
-
-    function getBotSceneMemory(botId) {
-      return localStorage.getItem(getSceneMemoryKey(botId)) || "";
-    }
-
+    // ==================== ذاكرة المشهد الثابتة ====================
+    function getSceneMemoryKey(botId) { return `${userStoragePrefix()}scene_mem_${botId}`; }
+    function getBotSceneMemory(botId) { return localStorage.getItem(getSceneMemoryKey(botId)) || ""; }
     function saveBotSceneMemory(botId, text) {
       localStorage.setItem(getSceneMemoryKey(botId), text);
       updateSceneMemoryBtnIndicator();
     }
-
     function updateSceneMemoryBtnIndicator() {
       if (!currentBot) return;
       const hasMem = Boolean(getBotSceneMemory(currentBot.id).trim());
@@ -2231,7 +2156,7 @@
       sceneMemoryModal.classList.remove("open");
     });
 
-    // ==================== أزرار توجيه السيناريو السريعة (Director Prompts) ====================
+    // ==================== أزرار توجيه السيناريو السريعة ====================
     document.getElementById("toggleDirectorBarBtn").addEventListener("click", () => {
       directorBar.classList.toggle("open");
     });
@@ -2305,7 +2230,7 @@
         }
         userSearchResults.innerHTML = data.results.map(u => `
           <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--bg-input); border-radius:11px; border:1px solid var(--border-color);">
-            <img src="${escapeHtml(u.avatarUrl)}" onerror="this.src='${FALLBACK_AVATAR}'" style="width:38px; height:38px; border-radius:50%; object-fit:cover;" />
+            <img src="${escapeHtml(u.avatarUrl)}" onerror="this.src='${getUniqueFallbackAvatar(u.name)}'" style="width:38px; height:38px; border-radius:50%; object-fit:cover;" />
             <div style="flex:1;">
               <div style="font-size:13.5px; font-weight:700; color:#fff;">${escapeHtml(u.name)}</div>
               <div style="font-size:11.5px; color:#a5b4fc; direction:ltr; text-align:right;">@${escapeHtml(u.username)} • ID: ${escapeHtml(u.id)}</div>
@@ -2399,7 +2324,10 @@
         const data = await res.json();
         const botsList = Array.isArray(data) ? data : (Array.isArray(data.bots) ? data.bots : null);
         if (res.ok && botsList) {
-          serverBots = botsList;
+          serverBots = botsList.map(b => ({
+            ...b,
+            avatarUrl: resolveBotAvatar(b)
+          }));
           localStorage.setItem(STORAGE_KEY_SERVER_BOTS_CACHE, JSON.stringify(serverBots));
           renderBotsGrid();
           updateDrawerContent();
@@ -2557,11 +2485,17 @@
     function getAllBots() {
       const overrides = getBotOverrides();
       const map = new Map();
-      DEFAULT_BOTS.forEach(b => map.set(b.id, overrides[b.id] ? { ...b, ...overrides[b.id] } : b));
-      serverBots.forEach(b => map.set(b.id, overrides[b.id] ? { ...b, ...overrides[b.id] } : b));
+      DEFAULT_BOTS.forEach(b => {
+        const merged = overrides[b.id] ? { ...b, ...overrides[b.id] } : b;
+        map.set(b.id, { ...merged, avatarUrl: resolveBotAvatar(merged) });
+      });
+      serverBots.forEach(b => {
+        const merged = overrides[b.id] ? { ...b, ...overrides[b.id] } : b;
+        map.set(b.id, { ...merged, avatarUrl: resolveBotAvatar(merged) });
+      });
       let custom = [];
       try { custom = JSON.parse(localStorage.getItem(`${userStoragePrefix()}custom_bots`) || "[]"); } catch {}
-      custom.forEach(b => map.set(b.id, b));
+      custom.forEach(b => map.set(b.id, { ...b, avatarUrl: resolveBotAvatar(b) }));
       return Array.from(map.values());
     }
 
@@ -2631,7 +2565,7 @@
       openBotEditor(null);
       botEditorTitle.textContent = `📋 استنساخ خاص: ${botToClone.name}`;
       document.getElementById("editorBotName").value = `${botToClone.name} (نسختي)`;
-      document.getElementById("editorBotAvatar").value = botToClone.avatarUrl || "";
+      document.getElementById("editorBotAvatar").value = resolveBotAvatar(botToClone);
       document.getElementById("editorBotBio").value = botToClone.bio || "";
       document.getElementById("editorBotGreeting").value = botToClone.greeting || "";
       editorSendWelcomeImg = Boolean(botToClone.sendWelcomeImage);
@@ -2666,7 +2600,7 @@
 
     document.getElementById("cancelLockBtn").addEventListener("click", () => { lockModal.classList.remove("open"); lockActionState = null; });
 
-    function submitLockModal() {
+    async function submitLockModal() {
       if (!lockActionState) return;
       const pass = lockPasswordInput.value.trim();
       const { mode, bot } = lockActionState;
@@ -2674,20 +2608,23 @@
       if (!pass) return alert("يرجى إدخال كلمة السر.");
 
       if (mode === "set") {
-        updateBotChatMeta(bot.id, { password: pass });
+        const hashedPass = await hashLockPassword(pass);
+        updateBotChatMeta(bot.id, { password: hashedPass });
         markBotUnlockedThisSession(bot.id, true);
         lockModal.classList.remove("open");
         lockActionState = null;
         renderBotsGrid();
       } else if (mode === "remove") {
-        if (pass !== meta.password) return alert("كلمة السر غير صحيحة!");
+        const isMatch = await verifyLockPassword(pass, meta.password);
+        if (!isMatch) return alert("كلمة السر غير صحيحة!");
         updateBotChatMeta(bot.id, { password: "" });
         markBotUnlockedThisSession(bot.id, false);
         lockModal.classList.remove("open");
         lockActionState = null;
         renderBotsGrid();
       } else if (mode === "unlock_open") {
-        if (pass !== meta.password) return alert("كلمة السر غير صحيحة!");
+        const isMatch = await verifyLockPassword(pass, meta.password);
+        if (!isMatch) return alert("كلمة السر غير صحيحة!");
         markBotUnlockedThisSession(bot.id, true);
         lockModal.classList.remove("open");
         lockActionState = null;
@@ -2723,12 +2660,14 @@
         const lastTxt = [...botMsgs].reverse().find(m => m.content)?.content.replace(/\*/g, "") || "محادثة نشطة";
         const isLockedNow = Boolean(meta.password) && !isBotUnlockedThisSession(bot.id);
         const previewText = isLockedNow ? "🔒 محادثة مقفلة بكلمة سر" : lastTxt;
+        const avatarSrc = resolveBotAvatar(bot);
+        const fallbackSrc = getUniqueFallbackAvatar(bot);
 
         const item = document.createElement("div");
         item.className = `recent-chat-item ${meta.pinned ? "pinned" : ""}`;
         item.innerHTML = `
           <div class="recent-chat-main">
-            <img src="${bot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" alt="${escapeHtml(bot.name)}" />
+            <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" />
             <div class="recent-chat-meta">
               <div class="recent-chat-title-row">
                 ${meta.pinned ? `<span title="مثبت">📌</span>` : ""}
@@ -2788,7 +2727,7 @@
       if (botToEdit) {
         botEditorTitle.textContent = `✏️ تعديل: ${botToEdit.name}`;
         document.getElementById("editorBotName").value = botToEdit.name || "";
-        document.getElementById("editorBotAvatar").value = botToEdit.avatarUrl || "";
+        document.getElementById("editorBotAvatar").value = resolveBotAvatar(botToEdit);
         document.getElementById("editorBotBio").value = botToEdit.bio || "";
         document.getElementById("editorBotGreeting").value = botToEdit.greeting || "";
         editorSendWelcomeImg = Boolean(botToEdit.sendWelcomeImage);
@@ -2808,7 +2747,7 @@
 
     saveBotEditorBtn.addEventListener("click", () => {
       const name = document.getElementById("editorBotName").value.trim();
-      const avatarUrl = document.getElementById("editorBotAvatar").value.trim() || FALLBACK_AVATAR;
+      const avatarUrl = document.getElementById("editorBotAvatar").value.trim() || getUniqueFallbackAvatar(name);
       const bio = document.getElementById("editorBotBio").value.trim() || "شخصية تفاعلية مخصصة.";
       const greeting = document.getElementById("editorBotGreeting").value.trim() || "*تبتسم وتنظر إليك*\n“أهلاً بك!”";
       if (!name) return alert("يرجى إدخال اسم الشخصية.");
@@ -2872,10 +2811,12 @@
       quickResumeList.innerHTML = "";
       recentBots.forEach(bot => {
         const meta = getBotChatMeta(bot.id);
+        const avatarSrc = resolveBotAvatar(bot);
+        const fallbackSrc = getUniqueFallbackAvatar(bot);
         const pill = document.createElement("div");
         pill.className = "resume-pill-card";
         pill.innerHTML = `
-          <img src="${bot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" alt="${escapeHtml(bot.name)}" />
+          <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" />
           <span>${meta.password ? "🔒 " : ""}${escapeHtml(bot.name)}</span>
         `;
         pill.onclick = () => requestOpenBotChat(bot);
@@ -2920,6 +2861,8 @@
       filteredBots.forEach(bot => {
         const active = isChatActive(bot);
         const meta = getBotChatMeta(bot.id);
+        const avatarSrc = resolveBotAvatar(bot);
+        const fallbackSrc = getUniqueFallbackAvatar(bot);
 
         const card = document.createElement("div");
         card.className = `bot-card ${bot.isCustom ? "is-custom-card" : ""}`;
@@ -2932,7 +2875,7 @@
             ${meta.password ? `<span class="lock-badge" title="مقفلة بكلمة سر">🔒</span>` : `<span></span>`}
           </div>
           <div class="card-media">
-            <img src="${bot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" alt="${escapeHtml(bot.name)}" loading="lazy" />
+            <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" loading="lazy" />
             <div class="chat-count-badge">💬 ${escapeHtml(bot.chatsCount || "جديد")}</div>
           </div>
           <div class="card-body">
@@ -2951,7 +2894,9 @@
 
     function openPreviewSheet(bot) {
       previewingBot = bot;
-      document.getElementById("previewAvatar").src = bot.avatarUrl;
+      const previewImg = document.getElementById("previewAvatar");
+      previewImg.src = resolveBotAvatar(bot);
+      previewImg.onerror = () => { previewImg.src = getUniqueFallbackAvatar(bot); };
       document.getElementById("previewName").textContent = bot.name;
       document.getElementById("previewBio").textContent = bot.bio;
       document.getElementById("previewTags").innerHTML = (bot.tags || []).map(t => `<span class="tag-chip">${escapeHtml(t)}</span>`).join("");
@@ -2987,14 +2932,15 @@
     function getStorageKey(bot) { return `${userStoragePrefix()}chat_${bot.id}`; }
 
     function getDefaultMessages(bot) {
+      const avatarSrc = resolveBotAvatar(bot);
       const list = [{
         role: "bot",
         type: "text",
         ltr: /[a-zA-Z]{10,}/.test(bot.greeting) && !/[\u0600-\u06FF]/.test(bot.greeting),
         content: bot.greeting
       }];
-      if (bot.sendWelcomeImage && bot.avatarUrl) {
-        list.push({ role: "bot", type: "image", imageUrl: bot.avatarUrl, content: "" });
+      if (bot.sendWelcomeImage && avatarSrc) {
+        list.push({ role: "bot", type: "image", imageUrl: avatarSrc, content: "" });
       }
       return list;
     }
@@ -3038,13 +2984,15 @@
 
     async function proceedOpenBotChat(bot) {
       currentBot = bot;
+      const avatarSrc = resolveBotAvatar(bot);
+      const fallbackSrc = getUniqueFallbackAvatar(bot);
       updateBotChatMeta(bot.id, { started: true, lastActiveAt: Date.now() });
       updateSceneMemoryBtnIndicator();
 
-      chatHeaderAvatar.src = bot.avatarUrl;
-      chatHeaderAvatar.onerror = () => { chatHeaderAvatar.src = FALLBACK_AVATAR; };
+      chatHeaderAvatar.src = avatarSrc;
+      chatHeaderAvatar.onerror = () => { chatHeaderAvatar.src = fallbackSrc; };
       chatHeaderName.textContent = bot.name;
-      ambientBg.style.backgroundImage = `url('${bot.avatarUrl}')`;
+      ambientBg.style.backgroundImage = `url('${avatarSrc}')`;
 
       messages = loadBotMessages(bot);
       const lastUser = [...messages].reverse().find(m => m.role === "user");
@@ -3127,8 +3075,8 @@
       if ((msg.role === "bot" || msg.role === "error") && currentBot) {
         const avatar = document.createElement("img");
         avatar.className = "msg-avatar";
-        avatar.src = currentBot.avatarUrl;
-        avatar.onerror = () => { avatar.src = FALLBACK_AVATAR; };
+        avatar.src = resolveBotAvatar(currentBot);
+        avatar.onerror = () => { avatar.src = getUniqueFallbackAvatar(currentBot); };
         row.appendChild(avatar);
       }
 
@@ -3142,6 +3090,7 @@
         const img = document.createElement("img");
         img.className = "chat-sent-img";
         img.src = msg.imageUrl;
+        img.onerror = () => { img.src = getUniqueFallbackAvatar(currentBot); };
         bubble.appendChild(img);
       } else if (msg.role === "bot") {
         if (msg.ltr) bubble.classList.add("ltr-msg");
@@ -3199,10 +3148,12 @@
     function renderAllMessages() {
       chatContainer.innerHTML = "";
       if (currentBot) {
+        const avatarSrc = resolveBotAvatar(currentBot);
+        const fallbackSrc = getUniqueFallbackAvatar(currentBot);
         const intro = document.createElement("div");
         intro.className = "character-intro";
         intro.innerHTML = `
-          <img class="intro-avatar" src="${currentBot.avatarUrl}" onerror="this.src='${FALLBACK_AVATAR}'" />
+          <img class="intro-avatar" src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" />
           <div class="intro-name">${escapeHtml(currentBot.name)}</div>
           <div class="intro-bio">${escapeHtml(currentBot.bio)}</div>
         `;
@@ -3241,7 +3192,6 @@
       const text = (customText ?? msgInput.value).trim();
       if (!text || isSending || !currentBot) return;
 
-      // تحديث الإضاءة فوراً بناءً على رسالة المستخدم كتمهيد بصري للمشهد
       const userMood = detectTextAtmosphere(text);
       applyAtmosphere(userMood, true);
 
@@ -3260,7 +3210,7 @@
       const typingRow = document.createElement("div");
       typingRow.className = "msg-row bot";
       typingRow.id = "typingIndicator";
-      typingRow.innerHTML = `<img class="msg-avatar" src="${currentBot.avatarUrl}" /><div class="msg-content-wrap"><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+      typingRow.innerHTML = `<img class="msg-avatar" src="${resolveBotAvatar(currentBot)}" /><div class="msg-content-wrap"><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
       chatContainer.appendChild(typingRow);
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
@@ -3289,7 +3239,6 @@
         if (!response.ok || !data.ok) {
           renderMessage({ role: "error", type: "text", content: data.error || "حدث خطأ أثناء الاتصال" }, -1);
         } else {
-          // تحليل رد البوت وتحديث الإضاءة والصوت وشارة المزاج تلقائياً
           const botMood = detectTextAtmosphere(data.reply);
           applyAtmosphere(botMood, true);
 
