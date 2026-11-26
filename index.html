@@ -1046,7 +1046,7 @@
       <div class="auth-error" id="profileErrorBox"></div>
 
       <div class="avatar-upload-box">
-        <img id="profileAvatarPreview" class="avatar-preview-circle" src="https://api.dicebear.com/7.x/initials/svg?seed=User" alt="Avatar" />
+        <img id="profileAvatarPreview" class="avatar-preview-circle" referrerpolicy="no-referrer" src="https://d.top4top.io/p_39776f6w21.jpg" alt="Avatar" />
         <label class="icon-btn" style="cursor:pointer;">
           📷 رفع صورة البروفايل
           <input type="file" id="profileAvatarFileInput" accept="image/*" hidden />
@@ -1068,7 +1068,7 @@
     <div class="drawer-identity-card">
       <div class="drawer-identity-top">
         <div class="user-profile-pill" id="openAccountSettingsFromPill" title="إعدادات الحساب">
-          <img id="drawerUserAvatar" src="https://api.dicebear.com/7.x/initials/svg?seed=User" alt="User" />
+          <img id="drawerUserAvatar" referrerpolicy="no-referrer" src="https://d.top4top.io/p_39776f6w21.jpg" alt="User" />
           <div class="user-profile-info">
             <h3 id="drawerUserName">مستخدم</h3>
             <span id="drawerUserMeta">@user • ID: ---</span>
@@ -1178,7 +1178,7 @@
         <button class="back-btn" id="openDrawerChatBtn" title="القائمة">☰</button>
         <button class="back-btn" id="backBtn" title="العودة للرئيسية">→</button>
         <div class="bot-profile">
-          <img class="header-avatar" id="chatHeaderAvatar" src="" alt="" />
+          <img class="header-avatar" id="chatHeaderAvatar" referrerpolicy="no-referrer" src="" alt="" />
           <div class="bot-info">
             <h1 id="chatHeaderName">Cow Girl Emma</h1>
             <div class="status-line">
@@ -1242,7 +1242,7 @@
       <h2>👤 إعدادات الحساب والهوية</h2>
 
       <div class="account-summary-box">
-        <img id="accModalAvatar" src="" alt="Avatar" />
+        <img id="accModalAvatar" referrerpolicy="no-referrer" src="" alt="Avatar" />
         <div style="min-width:0; flex:1;">
           <div id="accModalName" style="font-size:15px; font-weight:700; color:#fff;">---</div>
           <div id="accModalHandle" style="font-size:12px; color:#a5b4fc; direction:ltr; text-align:right;">@user • ID: ---</div>
@@ -1297,7 +1297,7 @@
   <div class="modal-backdrop bottom-sheet" id="previewModal">
     <div class="modal">
       <div class="preview-top">
-        <img id="previewAvatar" src="" alt="" />
+        <img id="previewAvatar" referrerpolicy="no-referrer" src="" alt="" />
         <div class="preview-meta">
           <h3 id="previewName"></h3>
           <div class="preview-tags" id="previewTags"></div>
@@ -1471,11 +1471,15 @@
 
   <script>
     const API_BASE_URL = "https://hin-18-1.onrender.com";
+    const FALLBACK_AVATAR = "https://d.top4top.io/p_39776f6w21.jpg";
     const MAX_ACCOUNTS_PER_DEVICE = 2;
 
     const STORAGE_KEY_USER_SESSION = "yollo_isolated_user_session_v1";
     const STORAGE_KEY_PREFS = "yollo_ui_preferences_v2";
-    const STORAGE_KEY_SERVER_BOTS_CACHE = "yollo_server_bots_cache_v1";
+    const STORAGE_KEY_SERVER_BOTS_CACHE = "yollo_server_bots_cache_v2";
+
+    // مسح أي كاش قديم كان يخزن صور كرتونية
+    try { localStorage.removeItem("yollo_server_bots_cache_v1"); } catch {}
 
     let currentUser = null;
     let pendingAuthState = null;
@@ -1489,27 +1493,61 @@
       serverBots = JSON.parse(localStorage.getItem(STORAGE_KEY_SERVER_BOTS_CACHE) || "[]");
     } catch {}
 
-    // ==================== 1. دالة استخراج صورة فريدة لكل بوت (إصلاح مشكلة توحد الصور) ====================
-    function getUniqueFallbackAvatar(botOrName) {
-      const seedName = typeof botOrName === "string"
-        ? botOrName
-        : (botOrName?.name || botOrName?.id || "Character");
-      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seedName)}`;
+    // ==================== 1. نظام جلب الصور الحقيقية عبر البروكسي وإلغاء الصور الكرتونية ====================
+    function getUniqueFallbackAvatar() {
+      return FALLBACK_AVATAR;
+    }
+
+    function getProxiedImageUrl(originalUrl) {
+      const clean = String(originalUrl || "").trim();
+      if (!clean || /^data:image\//i.test(clean)) return clean || FALLBACK_AVATAR;
+      if (clean.includes("/api/img-proxy")) return clean;
+      if (/^https?:\/\//i.test(clean)) {
+        return `${API_BASE_URL}/api/img-proxy?url=${encodeURIComponent(clean)}`;
+      }
+      return FALLBACK_AVATAR;
+    }
+
+    function isCartoonGeneratedUrl(url) {
+      return /api\.dicebear\.com/i.test(String(url || ""));
     }
 
     function resolveBotAvatar(bot) {
-      if (!bot) return getUniqueFallbackAvatar("Bot");
+      if (!bot) return FALLBACK_AVATAR;
       const rawUrl = String(
         bot.avatarUrl || bot.avatar || bot.imageUrl || bot.image || bot.cover || ""
       ).trim();
 
-      if (/^https?:\/\//i.test(rawUrl) || /^data:image\//i.test(rawUrl)) {
-        return rawUrl;
+      if (!rawUrl || isCartoonGeneratedUrl(rawUrl)) return FALLBACK_AVATAR;
+      if (/^data:image\//i.test(rawUrl)) return rawUrl;
+      if (rawUrl.startsWith("//")) return getProxiedImageUrl(`https:${rawUrl}`);
+      if (/^https?:\/\//i.test(rawUrl)) return getProxiedImageUrl(rawUrl);
+      if (rawUrl.startsWith("/")) return getProxiedImageUrl(`https://www.yollo.ai${rawUrl}`);
+      return FALLBACK_AVATAR;
+    }
+
+    function resolveRawOriginalUrl(bot) {
+      if (!bot) return FALLBACK_AVATAR;
+      const rawUrl = String(
+        bot.avatarUrl || bot.avatar || bot.imageUrl || bot.image || bot.cover || ""
+      ).trim();
+      if (!rawUrl || isCartoonGeneratedUrl(rawUrl)) return FALLBACK_AVATAR;
+      if (rawUrl.startsWith("//")) return `https:${rawUrl}`;
+      if (rawUrl.startsWith("/")) return `https://www.yollo.ai${rawUrl}`;
+      return rawUrl;
+    }
+
+    function handleAvatarImgError(imgEl, rawUrl) {
+      if (!imgEl) return;
+      if (!imgEl.dataset.triedDirect && rawUrl && /^https?:\/\//i.test(rawUrl)) {
+        imgEl.dataset.triedDirect = "1";
+        imgEl.src = rawUrl;
+        return;
       }
-      if (rawUrl.startsWith("//")) {
-        return `https:${rawUrl}`;
+      if (!imgEl.dataset.triedFallback) {
+        imgEl.dataset.triedFallback = "1";
+        imgEl.src = FALLBACK_AVATAR;
       }
-      return getUniqueFallbackAvatar(bot);
     }
 
     // ==================== 2. تشفير كلمة سر القفل (SHA-256) ====================
@@ -1866,7 +1904,7 @@
 
         if (data.step === "profile_setup") {
           pendingAuthState = { pendingToken: data.pendingToken, email: data.user.email, name: data.user.name };
-          profileAvatarPreview.src = getUniqueFallbackAvatar(data.user.name);
+          profileAvatarPreview.src = FALLBACK_AVATAR;
           authCredentialsStep.style.display = "none";
           authProfileStep.style.display = "flex";
         } else {
@@ -1957,7 +1995,7 @@
         if (!res.ok || !data.ok) throw new Error(data.error || "رمز التحقق غير صحيح");
 
         pendingAuthState.pendingToken = data.pendingToken;
-        profileAvatarPreview.src = getUniqueFallbackAvatar(pendingAuthState.name);
+        profileAvatarPreview.src = FALLBACK_AVATAR;
         authOtpStep.style.display = "none";
         authProfileStep.style.display = "flex";
       } catch (err) {
@@ -2020,7 +2058,7 @@
             pendingToken: pendingAuthState?.pendingToken,
             email: pendingAuthState?.email,
             username,
-            avatarUrl: uploadedProfileAvatarBase64 || profileAvatarPreview.src,
+            avatarUrl: uploadedProfileAvatarBase64 || FALLBACK_AVATAR,
             deviceFingerprint
           })
         });
@@ -2053,7 +2091,9 @@
 
     function updateUserHeaderUI() {
       if (!currentUser) return;
-      drawerUserAvatar.src = currentUser.avatarUrl || getUniqueFallbackAvatar(currentUser.name);
+      const cleanUserAvatar = isCartoonGeneratedUrl(currentUser.avatarUrl) ? FALLBACK_AVATAR : (currentUser.avatarUrl || FALLBACK_AVATAR);
+      drawerUserAvatar.src = /^https?:\/\//i.test(cleanUserAvatar) ? getProxiedImageUrl(cleanUserAvatar) : cleanUserAvatar;
+      drawerUserAvatar.onerror = () => handleAvatarImgError(drawerUserAvatar, cleanUserAvatar);
       drawerUserName.textContent = currentUser.name;
       drawerUserMeta.textContent = `@${currentUser.username} • ID: ${currentUser.id}`;
     }
@@ -2083,7 +2123,11 @@
       closeDrawer();
       await refreshDeviceQuotaStatus();
 
-      document.getElementById("accModalAvatar").src = currentUser.avatarUrl || getUniqueFallbackAvatar(currentUser.name);
+      const cleanUserAvatar = isCartoonGeneratedUrl(currentUser.avatarUrl) ? FALLBACK_AVATAR : (currentUser.avatarUrl || FALLBACK_AVATAR);
+      const accImg = document.getElementById("accModalAvatar");
+      accImg.src = /^https?:\/\//i.test(cleanUserAvatar) ? getProxiedImageUrl(cleanUserAvatar) : cleanUserAvatar;
+      accImg.onerror = () => handleAvatarImgError(accImg, cleanUserAvatar);
+
       document.getElementById("accModalName").textContent = currentUser.name;
       document.getElementById("accModalHandle").textContent = `@${currentUser.username} • ID: ${currentUser.id}`;
       document.getElementById("accModalEmail").textContent = currentUser.email || "";
@@ -2228,15 +2272,19 @@
           userSearchResults.innerHTML = `<p style="font-size:12px; color:var(--text-action);">لا توجد نتائج مطابقة.</p>`;
           return;
         }
-        userSearchResults.innerHTML = data.results.map(u => `
-          <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--bg-input); border-radius:11px; border:1px solid var(--border-color);">
-            <img src="${escapeHtml(u.avatarUrl)}" onerror="this.src='${getUniqueFallbackAvatar(u.name)}'" style="width:38px; height:38px; border-radius:50%; object-fit:cover;" />
-            <div style="flex:1;">
-              <div style="font-size:13.5px; font-weight:700; color:#fff;">${escapeHtml(u.name)}</div>
-              <div style="font-size:11.5px; color:#a5b4fc; direction:ltr; text-align:right;">@${escapeHtml(u.username)} • ID: ${escapeHtml(u.id)}</div>
+        userSearchResults.innerHTML = data.results.map(u => {
+          const cleanUAv = isCartoonGeneratedUrl(u.avatarUrl) ? FALLBACK_AVATAR : (u.avatarUrl || FALLBACK_AVATAR);
+          const proxiedUAv = /^https?:\/\//i.test(cleanUAv) ? getProxiedImageUrl(cleanUAv) : cleanUAv;
+          return `
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--bg-input); border-radius:11px; border:1px solid var(--border-color);">
+              <img referrerpolicy="no-referrer" src="${escapeHtml(proxiedUAv)}" onerror="handleAvatarImgError(this, '${escapeHtml(cleanUAv)}')" style="width:38px; height:38px; border-radius:50%; object-fit:cover;" />
+              <div style="flex:1;">
+                <div style="font-size:13.5px; font-weight:700; color:#fff;">${escapeHtml(u.name)}</div>
+                <div style="font-size:11.5px; color:#a5b4fc; direction:ltr; text-align:right;">@${escapeHtml(u.username)} • ID: ${escapeHtml(u.id)}</div>
+              </div>
             </div>
-          </div>
-        `).join("");
+          `;
+        }).join("");
       } catch {}
     });
 
@@ -2326,6 +2374,7 @@
         if (res.ok && botsList) {
           serverBots = botsList.map(b => ({
             ...b,
+            rawAvatarUrl: resolveRawOriginalUrl(b),
             avatarUrl: resolveBotAvatar(b)
           }));
           localStorage.setItem(STORAGE_KEY_SERVER_BOTS_CACHE, JSON.stringify(serverBots));
@@ -2487,15 +2536,15 @@
       const map = new Map();
       DEFAULT_BOTS.forEach(b => {
         const merged = overrides[b.id] ? { ...b, ...overrides[b.id] } : b;
-        map.set(b.id, { ...merged, avatarUrl: resolveBotAvatar(merged) });
+        map.set(b.id, { ...merged, rawAvatarUrl: resolveRawOriginalUrl(merged), avatarUrl: resolveBotAvatar(merged) });
       });
       serverBots.forEach(b => {
         const merged = overrides[b.id] ? { ...b, ...overrides[b.id] } : b;
-        map.set(b.id, { ...merged, avatarUrl: resolveBotAvatar(merged) });
+        map.set(b.id, { ...merged, rawAvatarUrl: resolveRawOriginalUrl(merged), avatarUrl: resolveBotAvatar(merged) });
       });
       let custom = [];
       try { custom = JSON.parse(localStorage.getItem(`${userStoragePrefix()}custom_bots`) || "[]"); } catch {}
-      custom.forEach(b => map.set(b.id, { ...b, avatarUrl: resolveBotAvatar(b) }));
+      custom.forEach(b => map.set(b.id, { ...b, rawAvatarUrl: resolveRawOriginalUrl(b), avatarUrl: resolveBotAvatar(b) }));
       return Array.from(map.values());
     }
 
@@ -2565,7 +2614,7 @@
       openBotEditor(null);
       botEditorTitle.textContent = `📋 استنساخ خاص: ${botToClone.name}`;
       document.getElementById("editorBotName").value = `${botToClone.name} (نسختي)`;
-      document.getElementById("editorBotAvatar").value = resolveBotAvatar(botToClone);
+      document.getElementById("editorBotAvatar").value = resolveRawOriginalUrl(botToClone);
       document.getElementById("editorBotBio").value = botToClone.bio || "";
       document.getElementById("editorBotGreeting").value = botToClone.greeting || "";
       editorSendWelcomeImg = Boolean(botToClone.sendWelcomeImage);
@@ -2661,13 +2710,13 @@
         const isLockedNow = Boolean(meta.password) && !isBotUnlockedThisSession(bot.id);
         const previewText = isLockedNow ? "🔒 محادثة مقفلة بكلمة سر" : lastTxt;
         const avatarSrc = resolveBotAvatar(bot);
-        const fallbackSrc = getUniqueFallbackAvatar(bot);
+        const rawOriginal = escapeHtml(resolveRawOriginalUrl(bot));
 
         const item = document.createElement("div");
         item.className = `recent-chat-item ${meta.pinned ? "pinned" : ""}`;
         item.innerHTML = `
           <div class="recent-chat-main">
-            <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" />
+            <img referrerpolicy="no-referrer" src="${avatarSrc}" onerror="handleAvatarImgError(this, '${rawOriginal}')" alt="${escapeHtml(bot.name)}" />
             <div class="recent-chat-meta">
               <div class="recent-chat-title-row">
                 ${meta.pinned ? `<span title="مثبت">📌</span>` : ""}
@@ -2727,7 +2776,7 @@
       if (botToEdit) {
         botEditorTitle.textContent = `✏️ تعديل: ${botToEdit.name}`;
         document.getElementById("editorBotName").value = botToEdit.name || "";
-        document.getElementById("editorBotAvatar").value = resolveBotAvatar(botToEdit);
+        document.getElementById("editorBotAvatar").value = resolveRawOriginalUrl(botToEdit);
         document.getElementById("editorBotBio").value = botToEdit.bio || "";
         document.getElementById("editorBotGreeting").value = botToEdit.greeting || "";
         editorSendWelcomeImg = Boolean(botToEdit.sendWelcomeImage);
@@ -2747,13 +2796,13 @@
 
     saveBotEditorBtn.addEventListener("click", () => {
       const name = document.getElementById("editorBotName").value.trim();
-      const avatarUrl = document.getElementById("editorBotAvatar").value.trim() || getUniqueFallbackAvatar(name);
+      const rawAvatar = document.getElementById("editorBotAvatar").value.trim() || FALLBACK_AVATAR;
       const bio = document.getElementById("editorBotBio").value.trim() || "شخصية تفاعلية مخصصة.";
       const greeting = document.getElementById("editorBotGreeting").value.trim() || "*تبتسم وتنظر إليك*\n“أهلاً بك!”";
       if (!name) return alert("يرجى إدخال اسم الشخصية.");
 
       if (editingBotTarget) {
-        const updatedFields = { name, avatarUrl, bio, greeting, sendWelcomeImage: editorSendWelcomeImg };
+        const updatedFields = { name, avatarUrl: rawAvatar, bio, greeting, sendWelcomeImage: editorSendWelcomeImg };
         if (editingBotTarget.isCustom) {
           const customList = getAllBots().filter(b => b.isCustom).map(b => b.id === editingBotTarget.id ? { ...b, ...updatedFields } : b);
           localStorage.setItem(`${userStoragePrefix()}custom_bots`, JSON.stringify(customList));
@@ -2765,7 +2814,7 @@
         const refreshedBot = getAllBots().find(b => b.id === editingBotTarget.id);
         botEditorModal.classList.remove("open");
         if (refreshedBot) {
-          syncBotDedicatedDB(refreshedBot, { bot: refreshedBot });
+          syncBotDedicatedDB(refreshedBot, { bot: { ...refreshedBot, avatarUrl: rawAvatar } });
           if (currentBot && currentBot.id === refreshedBot.id) proceedOpenBotChat(refreshedBot);
         }
       } else {
@@ -2773,7 +2822,7 @@
           id: `custom_${Date.now()}`,
           botId: 148005,
           name,
-          avatarUrl,
+          avatarUrl: rawAvatar,
           chatsCount: "مخصصة",
           isCustom: true,
           categories: ["all", "custom", "story"],
@@ -2812,11 +2861,11 @@
       recentBots.forEach(bot => {
         const meta = getBotChatMeta(bot.id);
         const avatarSrc = resolveBotAvatar(bot);
-        const fallbackSrc = getUniqueFallbackAvatar(bot);
+        const rawOriginal = escapeHtml(resolveRawOriginalUrl(bot));
         const pill = document.createElement("div");
         pill.className = "resume-pill-card";
         pill.innerHTML = `
-          <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" />
+          <img referrerpolicy="no-referrer" src="${avatarSrc}" onerror="handleAvatarImgError(this, '${rawOriginal}')" alt="${escapeHtml(bot.name)}" />
           <span>${meta.password ? "🔒 " : ""}${escapeHtml(bot.name)}</span>
         `;
         pill.onclick = () => requestOpenBotChat(bot);
@@ -2862,7 +2911,7 @@
         const active = isChatActive(bot);
         const meta = getBotChatMeta(bot.id);
         const avatarSrc = resolveBotAvatar(bot);
-        const fallbackSrc = getUniqueFallbackAvatar(bot);
+        const rawOriginal = escapeHtml(resolveRawOriginalUrl(bot));
 
         const card = document.createElement("div");
         card.className = `bot-card ${bot.isCustom ? "is-custom-card" : ""}`;
@@ -2875,7 +2924,7 @@
             ${meta.password ? `<span class="lock-badge" title="مقفلة بكلمة سر">🔒</span>` : `<span></span>`}
           </div>
           <div class="card-media">
-            <img src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" alt="${escapeHtml(bot.name)}" loading="lazy" />
+            <img referrerpolicy="no-referrer" src="${avatarSrc}" onerror="handleAvatarImgError(this, '${rawOriginal}')" alt="${escapeHtml(bot.name)}" loading="lazy" />
             <div class="chat-count-badge">💬 ${escapeHtml(bot.chatsCount || "جديد")}</div>
           </div>
           <div class="card-body">
@@ -2895,8 +2944,9 @@
     function openPreviewSheet(bot) {
       previewingBot = bot;
       const previewImg = document.getElementById("previewAvatar");
+      const rawOriginal = resolveRawOriginalUrl(bot);
       previewImg.src = resolveBotAvatar(bot);
-      previewImg.onerror = () => { previewImg.src = getUniqueFallbackAvatar(bot); };
+      previewImg.onerror = () => handleAvatarImgError(previewImg, rawOriginal);
       document.getElementById("previewName").textContent = bot.name;
       document.getElementById("previewBio").textContent = bot.bio;
       document.getElementById("previewTags").innerHTML = (bot.tags || []).map(t => `<span class="tag-chip">${escapeHtml(t)}</span>`).join("");
@@ -2985,12 +3035,12 @@
     async function proceedOpenBotChat(bot) {
       currentBot = bot;
       const avatarSrc = resolveBotAvatar(bot);
-      const fallbackSrc = getUniqueFallbackAvatar(bot);
+      const rawOriginal = resolveRawOriginalUrl(bot);
       updateBotChatMeta(bot.id, { started: true, lastActiveAt: Date.now() });
       updateSceneMemoryBtnIndicator();
 
       chatHeaderAvatar.src = avatarSrc;
-      chatHeaderAvatar.onerror = () => { chatHeaderAvatar.src = fallbackSrc; };
+      chatHeaderAvatar.onerror = () => handleAvatarImgError(chatHeaderAvatar, rawOriginal);
       chatHeaderName.textContent = bot.name;
       ambientBg.style.backgroundImage = `url('${avatarSrc}')`;
 
@@ -3075,8 +3125,9 @@
       if ((msg.role === "bot" || msg.role === "error") && currentBot) {
         const avatar = document.createElement("img");
         avatar.className = "msg-avatar";
+        avatar.referrerPolicy = "no-referrer";
         avatar.src = resolveBotAvatar(currentBot);
-        avatar.onerror = () => { avatar.src = getUniqueFallbackAvatar(currentBot); };
+        avatar.onerror = () => handleAvatarImgError(avatar, resolveRawOriginalUrl(currentBot));
         row.appendChild(avatar);
       }
 
@@ -3089,8 +3140,10 @@
         bubble.classList.add("image-bubble");
         const img = document.createElement("img");
         img.className = "chat-sent-img";
-        img.src = msg.imageUrl;
-        img.onerror = () => { img.src = getUniqueFallbackAvatar(currentBot); };
+        img.referrerPolicy = "no-referrer";
+        const cleanMsgImg = isCartoonGeneratedUrl(msg.imageUrl) ? FALLBACK_AVATAR : msg.imageUrl;
+        img.src = /^https?:\/\//i.test(cleanMsgImg) ? getProxiedImageUrl(cleanMsgImg) : cleanMsgImg;
+        img.onerror = () => handleAvatarImgError(img, cleanMsgImg);
         bubble.appendChild(img);
       } else if (msg.role === "bot") {
         if (msg.ltr) bubble.classList.add("ltr-msg");
@@ -3149,11 +3202,11 @@
       chatContainer.innerHTML = "";
       if (currentBot) {
         const avatarSrc = resolveBotAvatar(currentBot);
-        const fallbackSrc = getUniqueFallbackAvatar(currentBot);
+        const rawOriginal = escapeHtml(resolveRawOriginalUrl(currentBot));
         const intro = document.createElement("div");
         intro.className = "character-intro";
         intro.innerHTML = `
-          <img class="intro-avatar" src="${avatarSrc}" onerror="this.src='${fallbackSrc}'" />
+          <img class="intro-avatar" referrerpolicy="no-referrer" src="${avatarSrc}" onerror="handleAvatarImgError(this, '${rawOriginal}')" />
           <div class="intro-name">${escapeHtml(currentBot.name)}</div>
           <div class="intro-bio">${escapeHtml(currentBot.bio)}</div>
         `;
@@ -3210,7 +3263,7 @@
       const typingRow = document.createElement("div");
       typingRow.className = "msg-row bot";
       typingRow.id = "typingIndicator";
-      typingRow.innerHTML = `<img class="msg-avatar" src="${resolveBotAvatar(currentBot)}" /><div class="msg-content-wrap"><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+      typingRow.innerHTML = `<img class="msg-avatar" referrerpolicy="no-referrer" src="${resolveBotAvatar(currentBot)}" /><div class="msg-content-wrap"><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
       chatContainer.appendChild(typingRow);
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
